@@ -6,7 +6,7 @@ import requests
 app = FastAPI(title="Week 3 LLM Service")
 
 OLLAMA_URL = "http://host.docker.internal:11434/api/generate"
-MODEL = "codellama"
+MODEL = "mistral:7b"
 
 
 class GenerateRequest(BaseModel):
