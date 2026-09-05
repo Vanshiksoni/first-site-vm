@@ -1,0 +1,152 @@
+[
+  {
+    "id": 1,
+    "category": "Attendance",
+    "question": "What is the attendance requirement for students?"
+  },
+  {
+    "id": 2,
+    "category": "Attendance",
+    "question": "What can happen if a student falls below the required attendance percentage?"
+  },
+  {
+    "id": 3,
+    "category": "Attendance",
+    "question": "Can low attendance prevent a student from appearing for an examination?"
+  },
+  {
+    "id": 4,
+    "category": "Attendance",
+    "question": "What attendance rules should students follow?"
+  },
+  {
+    "id": 5,
+    "category": "Attendance",
+    "question": "What academic restrictions may apply because of poor attendance?"
+  },
+  {
+    "id": 6,
+    "category": "Assignment",
+    "question": "What are the rules for submitting assignments?"
+  },
+  {
+    "id": 7,
+    "category": "Assignment",
+    "question": "When should assignments be submitted?"
+  },
+  {
+    "id": 8,
+    "category": "Assignment",
+    "question": "What happens if an assignment is submitted late?"
+  },
+  {
+    "id": 9,
+    "category": "Assignment",
+    "question": "Can late assignments receive reduced marks?"
+  },
+  {
+    "id": 10,
+    "category": "Assignment",
+    "question": "What instructions should students follow when submitting assignments?"
+  },
+  {
+    "id": 11,
+    "category": "Examination",
+    "question": "What rules should students follow during examinations?"
+  },
+  {
+    "id": 12,
+    "category": "Examination",
+    "question": "When should students arrive at the examination venue?"
+  },
+  {
+    "id": 13,
+    "category": "Examination",
+    "question": "What should students carry to an examination?"
+  },
+  {
+    "id": 14,
+    "category": "Examination",
+    "question": "Where can students find the examination schedule?"
+  },
+  {
+    "id": 15,
+    "category": "Examination",
+    "question": "What identification is required during examinations?"
+  },
+  {
+    "id": 16,
+    "category": "Leave",
+    "question": "What is the procedure for taking academic leave?"
+  },
+  {
+    "id": 17,
+    "category": "Leave",
+    "question": "What documentation is required for academic leave?"
+  },
+  {
+    "id": 18,
+    "category": "Leave",
+    "question": "Is academic leave automatically approved?"
+  },
+  {
+    "id": 19,
+    "category": "Leave",
+    "question": "Who decides whether academic leave is approved?"
+  },
+  {
+    "id": 20,
+    "category": "Leave",
+    "question": "When should students submit documents for academic leave?"
+  },
+  {
+    "id": 21,
+    "category": "Grading",
+    "question": "How are students evaluated?"
+  },
+  {
+    "id": 22,
+    "category": "Grading",
+    "question": "What activities can be included in student assessment?"
+  },
+  {
+    "id": 23,
+    "category": "Grading",
+    "question": "Can assignments and quizzes be part of the grading structure?"
+  },
+  {
+    "id": 24,
+    "category": "Grading",
+    "question": "Can practical work and projects be included in assessment?"
+  },
+  {
+    "id": 25,
+    "category": "Grading",
+    "question": "Are mid-term and final examinations part of student evaluation?"
+  },
+  {
+    "id": 26,
+    "category": "Academic Support",
+    "question": "Who should students contact if they have questions about academic procedures?"
+  },
+  {
+    "id": 27,
+    "category": "Academic Support",
+    "question": "Where can students get help with academic procedures?"
+  },
+  {
+    "id": 28,
+    "category": "Outside Knowledge Base",
+    "question": "What is the minimum attendance percentage required at this university?"
+  },
+  {
+    "id": 29,
+    "category": "Outside Knowledge Base",
+    "question": "What is the maximum number of days of academic leave allowed?"
+  },
+  {
+    "id": 30,
+    "category": "Outside Knowledge Base",
+    "question": "What is the exact penalty percentage for submitting an assignment late?"
+  }
+]

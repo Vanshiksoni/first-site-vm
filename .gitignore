@@ -1,0 +1,24 @@
+# Python virtual environments
+venv/
+.venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment / secrets
+.env
+.env.*
+
+# Logs
+*.log
+
+# OS/editor files
+.DS_Store
+.vscode/
+.idea/
+
+# Evaluation generated results
+evaluation/results/

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Knowledge Base</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f4f6f8;
+            color: #222;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        input {
+            flex: 1;
+            padding: 14px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        button {
+            padding: 14px 24px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .search-button {
+            background: #222;
+            color: white;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .score {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .chunk {
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        #status {
+            margin-bottom: 15px;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>📚 University Knowledge Base</h1>
+
+    <div class="subtitle">
+        Semantic Search & Retrieval Service
+    </div>
+
+    <div class="search-box">
+        <input
+            type="text"
+            id="query"
+            placeholder="Ask a question about university policies..."
+        >
+
+        <button class="search-button" onclick="searchKnowledge()">
+            Search
+        </button>
+    </div>
+
+    <div id="status"></div>
+
+    <div id="results"></div>
+
+</div>
+
+<script>
+
+async function searchKnowledge() {
+
+    const query = document.getElementById("query").value.trim();
+    const status = document.getElementById("status");
+    const results = document.getElementById("results");
+
+    if (!query) {
+        status.textContent = "Please enter a question.";
+        return;
+    }
+
+    status.textContent = "Searching knowledge base...";
+    results.innerHTML = "";
+
+    try {
+
+        const response = await fetch(
+            "/search?query=" + encodeURIComponent(query)
+        );
+
+        const data = await response.json();
+
+        if (data.error) {
+            status.textContent = data.error;
+            return;
+        }
+
+        status.textContent =
+            "Found " + data.relevant_context.length +
+            " relevant knowledge chunks.";
+
+        data.relevant_context.forEach((item, index) => {
+
+            const card = document.createElement("div");
+            card.className = "card";
+
+            const score = document.createElement("div");
+            score.className = "score";
+            score.textContent =
+                "Result " + (index + 1) +
+                " — Similarity Score: " +
+                item.score.toFixed(4);
+
+            const chunk = document.createElement("div");
+            chunk.className = "chunk";
+            chunk.textContent = item.chunk;
+
+            card.appendChild(score);
+            card.appendChild(chunk);
+
+            results.appendChild(card);
+        });
+
+    } catch (error) {
+
+        status.textContent =
+            "Unable to connect to Retrieval Service.";
+
+        console.error(error);
+    }
+}
+
+</script>
+
+</body>
+</html>

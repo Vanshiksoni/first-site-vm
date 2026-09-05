@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Student Helpdesk</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f4f6f8;
+            color: #222;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .question-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        textarea {
+            width: 100%;
+            box-sizing: border-box;
+            min-height: 100px;
+            padding: 14px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            resize: vertical;
+        }
+
+        button {
+            margin-top: 12px;
+            padding: 14px 24px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            background: #222;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: wait;
+        }
+
+        #status {
+            margin-top: 15px;
+            color: #666;
+        }
+
+        .answer {
+            margin-top: 25px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .answer-text {
+            line-height: 1.7;
+            white-space: pre-wrap;
+        }
+
+        .badge {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 7px 12px;
+            border-radius: 20px;
+            background: #e8f5e9;
+            color: #256029;
+            font-weight: bold;
+        }
+
+        .context {
+            margin-top: 25px;
+        }
+
+        .context-card {
+            background: #fafafa;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .score {
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🎓 University Student Helpdesk</h1>
+
+    <div class="subtitle">
+        Ask questions about university academic policies
+    </div>
+
+    <div class="question-box">
+
+        <textarea
+            id="question"
+            placeholder="Example: What are the rules for assignments?"
+        ></textarea>
+
+        <button id="askButton" onclick="askQuestion()">
+            Ask Helpdesk
+        </button>
+
+        <div id="status"></div>
+
+    </div>
+
+    <div id="answerSection"></div>
+
+</div>
+
+<script>
+
+async function askQuestion() {
+
+    const question =
+        document.getElementById("question").value.trim();
+
+    const button =
+        document.getElementById("askButton");
+
+    const status =
+        document.getElementById("status");
+
+    const answerSection =
+        document.getElementById("answerSection");
+
+    if (!question) {
+        status.textContent = "Please enter a question.";
+        return;
+    }
+
+    button.disabled = true;
+    status.textContent =
+        "Searching the knowledge base and generating an answer...";
+
+    answerSection.innerHTML = "";
+
+    try {
+
+        const response = await fetch("/ask", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                question: question
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.detail || "Request failed");
+        }
+
+        status.textContent = "Answer generated successfully.";
+
+        let contextHTML = "";
+
+        data.retrieved_context.forEach((item, index) => {
+
+            contextHTML += `
+                <div class="context-card">
+                    <div class="score">
+                        Result ${index + 1}
+                        — Similarity Score:
+                        ${item.score.toFixed(4)}
+                    </div>
+                    <div>${item.chunk}</div>
+                </div>
+            `;
+        });
+
+        answerSection.innerHTML = `
+            <div class="answer">
+
+                <h2>Answer</h2>
+
+                <div class="answer-text">
+                    ${data.answer}
+                </div>
+
+                <div class="badge">
+                    ✓ RAG Used
+                </div>
+
+                <div class="context">
+
+                    <h3>Retrieved Knowledge</h3>
+
+                    ${contextHTML}
+
+                </div>
+
+            </div>
+        `;
+
+    } catch (error) {
+
+        status.textContent =
+            "Unable to process the question.";
+
+        console.error(error);
+
+    } finally {
+
+        button.disabled = false;
+
+    }
+}
+
+</script>
+
+</body>
+</html>

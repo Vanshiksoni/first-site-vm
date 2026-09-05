@@ -1,0 +1,182 @@
+[
+  {
+    "id": 1,
+    "category": "Attendance",
+    "question": "What is the attendance requirement for students?",
+    "expected_answer": "Students are expected to maintain the minimum attendance requirement specified by their university or course. The exact percentage is not specified in the knowledge base."
+  },
+  {
+    "id": 2,
+    "category": "Attendance",
+    "question": "What can happen if a student falls below the required attendance percentage?",
+    "expected_answer": "Students who fall below the required attendance percentage may be subject to academic restrictions or may not be permitted to appear for certain examinations."
+  },
+  {
+    "id": 3,
+    "category": "Attendance",
+    "question": "Can low attendance prevent a student from appearing for an examination?",
+    "expected_answer": "Yes. Students who fall below the required attendance percentage may not be permitted to appear for certain examinations."
+  },
+  {
+    "id": 4,
+    "category": "Attendance",
+    "question": "What attendance rules should students follow?",
+    "expected_answer": "Students should maintain the minimum attendance requirement specified by their university or course."
+  },
+  {
+    "id": 5,
+    "category": "Attendance",
+    "question": "What academic restrictions may apply because of poor attendance?",
+    "expected_answer": "Students who fall below the required attendance percentage may be subject to academic restrictions or may not be permitted to appear for certain examinations."
+  },
+  {
+    "id": 6,
+    "category": "Assignment",
+    "question": "What are the rules for submitting assignments?",
+    "expected_answer": "Assignments must be submitted before the deadline specified by the instructor. Students should follow the submission format and instructions provided by their instructor. Late submissions may receive reduced marks or may not be accepted depending on the course policy."
+  },
+  {
+    "id": 7,
+    "category": "Assignment",
+    "question": "When should assignments be submitted?",
+    "expected_answer": "Assignments should be submitted before the deadline specified by the instructor."
+  },
+  {
+    "id": 8,
+    "category": "Assignment",
+    "question": "What happens if an assignment is submitted late?",
+    "expected_answer": "Late submissions may receive reduced marks or may not be accepted depending on the course policy."
+  },
+  {
+    "id": 9,
+    "category": "Assignment",
+    "question": "Can late assignments receive reduced marks?",
+    "expected_answer": "Yes. Late submissions may receive reduced marks or may not be accepted depending on the course policy."
+  },
+  {
+    "id": 10,
+    "category": "Assignment",
+    "question": "What instructions should students follow when submitting assignments?",
+    "expected_answer": "Students should follow the submission format and instructions provided by their instructor."
+  },
+  {
+    "id": 11,
+    "category": "Examination",
+    "question": "What rules should students follow during examinations?",
+    "expected_answer": "Students must follow the examination schedule published by the university, arrive at the examination venue before the scheduled start time, and carry the required student identification and examination materials."
+  },
+  {
+    "id": 12,
+    "category": "Examination",
+    "question": "When should students arrive at the examination venue?",
+    "expected_answer": "Students should arrive at the examination venue before the scheduled start time."
+  },
+  {
+    "id": 13,
+    "category": "Examination",
+    "question": "What should students carry to an examination?",
+    "expected_answer": "Students should carry the required student identification and examination materials."
+  },
+  {
+    "id": 14,
+    "category": "Examination",
+    "question": "Where can students find the examination schedule?",
+    "expected_answer": "Students should follow the examination schedule published by the university."
+  },
+  {
+    "id": 15,
+    "category": "Examination",
+    "question": "What identification is required during examinations?",
+    "expected_answer": "Students should carry the required student identification and examination materials."
+  },
+  {
+    "id": 16,
+    "category": "Leave",
+    "question": "What is the procedure for taking academic leave?",
+    "expected_answer": "Students who require academic leave should follow the university's prescribed leave procedure and submit the required documentation within the specified period."
+  },
+  {
+    "id": 17,
+    "category": "Leave",
+    "question": "What documentation is required for academic leave?",
+    "expected_answer": "Students must submit the required documentation according to the university's prescribed leave procedure."
+  },
+  {
+    "id": 18,
+    "category": "Leave",
+    "question": "Is academic leave automatically approved?",
+    "expected_answer": "No. Approval of leave is subject to university rules."
+  },
+  {
+    "id": 19,
+    "category": "Leave",
+    "question": "Who decides whether academic leave is approved?",
+    "expected_answer": "Approval of academic leave is subject to university rules. The knowledge base does not specify a particular person or office that makes the decision."
+  },
+  {
+    "id": 20,
+    "category": "Leave",
+    "question": "When should students submit documents for academic leave?",
+    "expected_answer": "Students should submit the required documentation within the specified period according to the university's prescribed leave procedure."
+  },
+  {
+    "id": 21,
+    "category": "Grading",
+    "question": "How are students evaluated?",
+    "expected_answer": "Students are evaluated according to the assessment structure defined for their course."
+  },
+  {
+    "id": 22,
+    "category": "Grading",
+    "question": "What activities can be included in student assessment?",
+    "expected_answer": "Student assessment may include assignments, quizzes, practical work, mid-term examinations, final examinations, projects, and other academic activities."
+  },
+  {
+    "id": 23,
+    "category": "Grading",
+    "question": "Can assignments and quizzes be part of the grading structure?",
+    "expected_answer": "Yes. Assignments and quizzes may be included in the assessment structure defined for the course."
+  },
+  {
+    "id": 24,
+    "category": "Grading",
+    "question": "Can practical work and projects be included in assessment?",
+    "expected_answer": "Yes. Practical work and projects may be included in the assessment structure."
+  },
+  {
+    "id": 25,
+    "category": "Grading",
+    "question": "Are mid-term and final examinations part of student evaluation?",
+    "expected_answer": "Yes. Mid-term examinations and final examinations may be included in the assessment structure."
+  },
+  {
+    "id": 26,
+    "category": "Academic Support",
+    "question": "Who should students contact if they have questions about academic procedures?",
+    "expected_answer": "Students should contact the appropriate faculty member, academic department, student support office, or university administration."
+  },
+  {
+    "id": 27,
+    "category": "Academic Support",
+    "question": "Where can students get help with academic procedures?",
+    "expected_answer": "Students can get help from the appropriate faculty member, academic department, student support office, or university administration."
+  },
+  {
+    "id": 28,
+    "category": "Outside Knowledge Base",
+    "question": "What is the minimum attendance percentage required at this university?",
+    "expected_answer": "The exact minimum attendance percentage is not specified in the knowledge base."
+  },
+  {
+    "id": 29,
+    "category": "Outside Knowledge Base",
+    "question": "What is the maximum number of days of academic leave allowed?",
+    "expected_answer": "The maximum number of academic leave days is not specified in the knowledge base."
+  },
+  {
+    "id": 30,
+    "category": "Outside Knowledge Base",
+    "question": "What is the exact penalty percentage for submitting an assignment late?",
+    "expected_answer": "The exact late-submission penalty percentage is not specified in the knowledge base. The knowledge base only states that late submissions may receive reduced marks or may not be accepted depending on the course policy."
+  }
+]
