@@ -46,7 +46,7 @@ def ask(request: QuestionRequest):
                 "prompt": request.question,
                 "context": relevant_context
             },
-            timeout=30
+            timeout=120
         )
 
         llm_response.raise_for_status()
