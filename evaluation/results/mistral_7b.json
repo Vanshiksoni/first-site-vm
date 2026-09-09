@@ -1,0 +1,632 @@
+[
+  {
+    "id": 1,
+    "category": "Attendance",
+    "question": "What is the attendance requirement for students?",
+    "expected_answer": "Students are expected to maintain the minimum attendance requirement specified by their university or course. The exact percentage is not specified in the knowledge base.",
+    "model": "mistral:7b",
+    "answer": " The attendance requirement for students is not specified in the provided context.",
+    "rag_used": true,
+    "llm_used": true,
+    "retrieved_context": [
+      {
+        "chunk": "Attendance Policy\nStudents are expected to maintain the minimum attendance requirement specified by their university or course. Students who fall below the required attendance percentage may be subject to academic restrictions or may not be permitted to appear for certain examinations.",
+        "score": 1.4507190985981042
+      },
+      {
+        "chunk": "Examination Policy\nStudents must follow the examination schedule published by the university. Students should arrive at the examination venue before the scheduled start time and carry the required student identification and examination materials.",
+        "score": 0.03182337692674695
+      }
+    ],
+    "latency_seconds": 6.659
+  },
+  {
+    "id": 2,
+    "category": "Attendance",
+    "question": "What can happen if a student falls below the required attendance percentage?",
+    "expected_answer": "Students who fall below the required attendance percentage may be subject to academic restrictions or may not be permitted to appear for certain examinations.",
+    "model": "mistral:7b",
+    "answer": " If a student falls below the required attendance percentage, according to the provided context, they may be subject to academic restrictions or may not be permitted to appear for certain examinations.",
+    "rag_used": true,
+    "llm_used": true,
+    "retrieved_context": [
+      {
+        "chunk": "Attendance Policy\nStudents are expected to maintain the minimum attendance requirement specified by their university or course. Students who fall below the required attendance percentage may be subject to academic restrictions or may not be permitted to appear for certain examinations.",
+        "score": 1.4264947860243726
+      },
+      {
+        "chunk": "Examination Policy\nStudents must follow the examination schedule published by the university. Students should arrive at the examination venue before the scheduled start time and carry the required student identification and examination materials.",
+        "score": 0.07326431878908479
+      }
+    ],
+    "latency_seconds": 6.211
+  },
+  {
+    "id": 3,
+    "category": "Attendance",
+    "question": "Can low attendance prevent a student from appearing for an examination?",
+    "expected_answer": "Yes. Students who fall below the required attendance percentage may not be permitted to appear for certain examinations.",
+    "model": "mistral:7b",
+    "answer": " Yes, according to the provided context, low attendance may prevent a student from appearing for an examination. The Attendance Policy states that students who fall below the required attendance percentage may be subject to academic restrictions or may not be permitted to appear for certain examinations.",
+    "rag_used": true,
+    "llm_used": true,
+    "retrieved_context": [
+      {
+        "chunk": "Examination Policy\nStudents must follow the examination schedule published by the university. Students should arrive at the examination venue before the scheduled start time and carry the required student identification and examination materials.",
+        "score": 1.412677990548441
+      },
+      {
+        "chunk": "Attendance Policy\nStudents are expected to maintain the minimum attendance requirement specified by their university or course. Students who fall below the required attendance percentage may be subject to academic restrictions or may not be permitted to appear for certain examinations.",
+        "score": 1.274176742859818
+      }
+    ],
+    "latency_seconds": 11.391
+  },
+  {
+    "id": 4,
+    "category": "Attendance",
+    "question": "What attendance rules should students follow?",
+    "expected_answer": "Students should maintain the minimum attendance requirement specified by their university or course.",
+    "model": "mistral:7b",
+    "answer": " The knowledge base indicates that students should maintain the minimum attendance requirement specified by their university or course. If they fall below the required attendance percentage, they may be subject to academic restrictions or may not be permitted to appear for certain examinations.",
+    "rag_used": true,
+    "llm_used": true,
+    "retrieved_context": [
+      {
+        "chunk": "Attendance Policy\nStudents are expected to maintain the minimum attendance requirement specified by their university or course. Students who fall below the required attendance percentage may be subject to academic restrictions or may not be permitted to appear for certain examinations.",
+        "score": 1.2771043401868956
+      },
+      {
+        "chunk": "Leave Policy\nStudents who require academic leave should follow the university's prescribed leave procedure and submit the required documentation within the specified period. Approval of leave is subject to university rules.",
+        "score": 0.13278623207316265
+      }
+    ],
+    "latency_seconds": 9.032
+  },
+  {
+    "id": 5,
+    "category": "Attendance",
+    "question": "What academic restrictions may apply because of poor attendance?",
+    "expected_answer": "Students who fall below the required attendance percentage may be subject to academic restrictions or may not be permitted to appear for certain examinations.",
+    "model": "mistral:7b",
+    "answer": " According to the provided context, academic restrictions that may apply due to poor attendance could include being subject to restrictions such as not being permitted to appear for certain examinations. However, the specifics of these restrictions might vary depending on the university or course regulations, and detailed information about them is not available in the given context. It's best to consult with the appropriate faculty member, academic department, student support office, or university administration for more accurate information.",
+    "rag_used": true,
+    "llm_used": true,
+    "retrieved_context": [
+      {
+        "chunk": "Attendance Policy\nStudents are expected to maintain the minimum attendance requirement specified by their university or course. Students who fall below the required attendance percentage may be subject to academic restrictions or may not be permitted to appear for certain examinations.",
+        "score": 1.4367424263156054
+      },
+      {
+        "chunk": "Academic Support\nStudents who have questions about academic procedures should contact the appropriate faculty member, academic department, student support office, or university administration.",
+        "score": 0.09980654690308838
+      }
+    ],
+    "latency_seconds": 14.135
+  },
+  {
+    "id": 6,
+    "category": "Assignment",
+    "question": "What are the rules for submitting assignments?",
+    "expected_answer": "Assignments must be submitted before the deadline specified by the instructor. Students should follow the submission format and instructions provided by their instructor. Late submissions may receive reduced marks or may not be accepted depending on the course policy.",
+    "model": "mistral:7b",
+    "answer": " The rules for submitting assignments, as per the provided context, include:\n\n1. Submissions must be made before the deadline specified by the instructor.\n2. Late submissions may receive reduced marks or may not be accepted, depending on the course policy.\n3. Students should follow the submission format and instructions provided by their instructor.\n\nIf more specific details about the submission process, such as the method or location of submission, are required, that information is not available in",
+    "rag_used": true,
+    "llm_used": true,
+    "retrieved_context": [
+      {
+        "chunk": "Assignment Policy\nAssignments must be submitted before the deadline specified by the instructor. Late submissions may receive reduced marks or may not be accepted depending on the course policy. Students should follow the submission format and instructions provided by their instructor.",
+        "score": 1.0799539113681342
+      },
+      {
+        "chunk": "Leave Policy\nStudents who require academic leave should follow the university's prescribed leave procedure and submit the required documentation within the specified period. Approval of leave is subject to university rules.",
+        "score": 0.11208808381269801
+      }
+    ],
+    "latency_seconds": 17.135
+  },
+  {
+    "id": 7,
+    "category": "Assignment",
+    "question": "When should assignments be submitted?",
+    "expected_answer": "Assignments should be submitted before the deadline specified by the instructor.",
+    "model": "mistral:7b",
+    "answer": " According to the provided context, assignments should be submitted before the deadline specified by the instructor. The exact date and time of the deadline will vary depending on the specific course and assignment.",
+    "rag_used": true,
+    "llm_used": true,
+    "retrieved_context": [
+      {
+        "chunk": "Assignment Policy\nAssignments must be submitted before the deadline specified by the instructor. Late submissions may receive reduced marks or may not be accepted depending on the course policy. Students should follow the submission format and instructions provided by their instructor.",
+        "score": 1.251375310687009
+      },
+      {
+        "chunk": "Grading Policy\nStudents are evaluated according to the assessment structure defined for their course. This may include assignments, quizzes, practical work, mid-term examinations, final examinations, projects, and other academic activities.",
+        "score": 0.06510586557590448
+      }
+    ],
+    "latency_seconds": 10.23
+  },
+  {
+    "id": 8,
+    "category": "Assignment",
+    "question": "What happens if an assignment is submitted late?",
+    "expected_answer": "Late submissions may receive reduced marks or may not be accepted depending on the course policy.",
+    "model": "mistral:7b",
+    "answer": " If the information is not explicitly stated in the provided context, it's not available in the knowledge base. However, based on the general academic practices, it's likely that late submissions of assignments may receive reduced marks or may not be accepted, depending on the course policy. It's advisable to consult the specific course policy or instructor for more detailed information.",
+    "rag_used": true,
+    "llm_used": true,
+    "retrieved_context": [
+      {
+        "chunk": "Assignment Policy\nAssignments must be submitted before the deadline specified by the instructor. Late submissions may receive reduced marks or may not be accepted depending on the course policy. Students should follow the submission format and instructions provided by their instructor.",
+        "score": 1.2663364519320588
+      },
+      {
+        "chunk": "Attendance Policy\nStudents are expected to maintain the minimum attendance requirement specified by their university or course. Students who fall below the required attendance percentage may be subject to academic restrictions or may not be permitted to appear for certain examinations.",
+        "score": 0.0
+      }
+    ],
+    "latency_seconds": 12.915
+  },
+  {
+    "id": 9,
+    "category": "Assignment",
+    "question": "Can late assignments receive reduced marks?",
+    "expected_answer": "Yes. Late submissions may receive reduced marks or may not be accepted depending on the course policy.",
+    "model": "mistral:7b",
+    "answer": " Yes, according to the provided context, late assignments may receive reduced marks, depending on the course policy.",
+    "rag_used": true,
+    "llm_used": true,
+    "retrieved_context": [
+      {
+        "chunk": "Assignment Policy\nAssignments must be submitted before the deadline specified by the instructor. Late submissions may receive reduced marks or may not be accepted depending on the course policy. Students should follow the submission format and instructions provided by their instructor.",
+        "score": 1.3972023258491832
+      },
+      {
+        "chunk": "Grading Policy\nStudents are evaluated according to the assessment structure defined for their course. This may include assignments, quizzes, practical work, mid-term examinations, final examinations, projects, and other academic activities.",
+        "score": 0.04120320079118511
+      }
+    ],
+    "latency_seconds": 4.188
+  },
+  {
+    "id": 10,
+    "category": "Assignment",
+    "question": "What instructions should students follow when submitting assignments?",
+    "expected_answer": "Students should follow the submission format and instructions provided by their instructor.",
+    "model": "mistral:7b",
+    "answer": " According to the Assignment Policy provided, students should follow the submission format and instructions provided by their instructor when submitting assignments.",
+    "rag_used": true,
+    "llm_used": true,
+    "retrieved_context": [
+      {
+        "chunk": "Assignment Policy\nAssignments must be submitted before the deadline specified by the instructor. Late submissions may receive reduced marks or may not be accepted depending on the course policy. Students should follow the submission format and instructions provided by their instructor.",
+        "score": 1.2672754100508947
+      },
+      {
+        "chunk": "Examination Policy\nStudents must follow the examination schedule published by the university. Students should arrive at the examination venue before the scheduled start time and carry the required student identification and examination materials.",
+        "score": 0.12840730747562734
+      }
+    ],
+    "latency_seconds": 6.294
+  },
+  {
+    "id": 11,
+    "category": "Examination",
+    "question": "What rules should students follow during examinations?",
+    "expected_answer": "Students must follow the examination schedule published by the university, arrive at the examination venue before the scheduled start time, and carry the required student identification and examination materials.",
+    "model": "mistral:7b",
+    "answer": " According to the provided context, students should follow the rules outlined in the Examination Policy during examinations. These rules include arriving at the examination venue before the scheduled start time, carrying the required student identification, and carrying the necessary examination materials. However, the context does not specify any specific behaviors or etiquettes during examinations, so it is not clear if there are any additional rules related to conduct during the examination itself.",
+    "rag_used": true,
+    "llm_used": true,
+    "retrieved_context": [
+      {
+        "chunk": "Examination Policy\nStudents must follow the examination schedule published by the university. Students should arrive at the examination venue before the scheduled start time and carry the required student identification and examination materials.",
+        "score": 1.1284073074756273
+      },
+      {
+        "chunk": "Grading Policy\nStudents are evaluated according to the assessment structure defined for their course. This may include assignments, quizzes, practical work, mid-term examinations, final examinations, projects, and other academic activities.",
+        "score": 0.1404091035481598
+      }
+    ],
+    "latency_seconds": 13.977
+  },
+  {
+    "id": 12,
+    "category": "Examination",
+    "question": "When should students arrive at the examination venue?",
+    "expected_answer": "Students should arrive at the examination venue before the scheduled start time.",
+    "model": "mistral:7b",
+    "answer": " Students should arrive at the examination venue before the scheduled start time, as stated in the Examination Policy.",
+    "rag_used": true,
+    "llm_used": true,
+    "retrieved_context": [
+      {
+        "chunk": "Examination Policy\nStudents must follow the examination schedule published by the university. Students should arrive at the examination venue before the scheduled start time and carry the required student identification and examination materials.",
+        "score": 1.5448591320026108
+      },
+      {
+        "chunk": "Attendance Policy\nStudents are expected to maintain the minimum attendance requirement specified by their university or course. Students who fall below the required attendance percentage may be subject to academic restrictions or may not be permitted to appear for certain examinations.",
+        "score": 0.023652040435291555
+      }
+    ],
+    "latency_seconds": 5.949
+  },
+  {
+    "id": 13,
+    "category": "Examination",
+    "question": "What should students carry to an examination?",
+    "expected_answer": "Students should carry the required student identification and examination materials.",
+    "model": "mistral:7b",
+    "answer": " According to the provided context, students should carry the required student identification and examination materials to an examination.",
+    "rag_used": true,
+    "llm_used": true,
+    "retrieved_context": [
+      {
+        "chunk": "Examination Policy\nStudents must follow the examination schedule published by the university. Students should arrive at the examination venue before the scheduled start time and carry the required student identification and examination materials.",
+        "score": 1.525436892278346
+      },
+      {
+        "chunk": "Attendance Policy\nStudents are expected to maintain the minimum attendance requirement specified by their university or course. Students who fall below the required attendance percentage may be subject to academic restrictions or may not be permitted to appear for certain examinations.",
+        "score": 0.03972293757914171
+      }
+    ],
+    "latency_seconds": 4.195
+  },
+  {
+    "id": 14,
+    "category": "Examination",
+    "question": "Where can students find the examination schedule?",
+    "expected_answer": "Students should follow the examination schedule published by the university.",
+    "model": "mistral:7b",
+    "answer": " The examination schedule can be found by referring to the schedule published by the university, as stated in the Examination Policy.",
+    "rag_used": true,
+    "llm_used": true,
+    "retrieved_context": [
+      {
+        "chunk": "Examination Policy\nStudents must follow the examination schedule published by the university. Students should arrive at the examination venue before the scheduled start time and carry the required student identification and examination materials.",
+        "score": 1.5163286571563834
+      },
+      {
+        "chunk": "Attendance Policy\nStudents are expected to maintain the minimum attendance requirement specified by their university or course. Students who fall below the required attendance percentage may be subject to academic restrictions or may not be permitted to appear for certain examinations.",
+        "score": 0.0329296041172499
+      }
+    ],
+    "latency_seconds": 4.595
+  },
+  {
+    "id": 15,
+    "category": "Examination",
+    "question": "What identification is required during examinations?",
+    "expected_answer": "Students should carry the required student identification and examination materials.",
+    "model": "mistral:7b",
+    "answer": " The knowledge base provides information about examinations, but it does not specify the exact identification required during examinations. However, it is implied that students should carry the required student identification.",
+    "rag_used": true,
+    "llm_used": true,
+    "retrieved_context": [
+      {
+        "chunk": "Examination Policy\nStudents must follow the examination schedule published by the university. Students should arrive at the examination venue before the scheduled start time and carry the required student identification and examination materials.",
+        "score": 1.1456076197854976
+      },
+      {
+        "chunk": "Grading Policy\nStudents are evaluated according to the assessment structure defined for their course. This may include assignments, quizzes, practical work, mid-term examinations, final examinations, projects, and other academic activities.",
+        "score": 0.1451141884309601
+      }
+    ],
+    "latency_seconds": 6.099
+  },
+  {
+    "id": 16,
+    "category": "Leave",
+    "question": "What is the procedure for taking academic leave?",
+    "expected_answer": "Students who require academic leave should follow the university's prescribed leave procedure and submit the required documentation within the specified period.",
+    "model": "mistral:7b",
+    "answer": " The procedure for taking academic leave can be found in the university's prescribed leave procedure. Students should submit the required documentation within the specified period. Approval of leave is subject to university rules. (Answer derived from Leave Policy context.)",
+    "rag_used": true,
+    "llm_used": true,
+    "retrieved_context": [
+      {
+        "chunk": "Leave Policy\nStudents who require academic leave should follow the university's prescribed leave procedure and submit the required documentation within the specified period. Approval of leave is subject to university rules.",
+        "score": 1.5029107261175423
+      },
+      {
+        "chunk": "Academic Support\nStudents who have questions about academic procedures should contact the appropriate faculty member, academic department, student support office, or university administration.",
+        "score": 0.09980654690308838
+      }
+    ],
+    "latency_seconds": 10.579
+  },
+  {
+    "id": 17,
+    "category": "Leave",
+    "question": "What documentation is required for academic leave?",
+    "expected_answer": "Students must submit the required documentation according to the university's prescribed leave procedure.",
+    "model": "mistral:7b",
+    "answer": " The provided context does not specify the exact documentation required for academic leave. It is recommended to check with the appropriate faculty member, academic department, student support office, or university administration for detailed information.",
+    "rag_used": true,
+    "llm_used": true,
+    "retrieved_context": [
+      {
+        "chunk": "Leave Policy\nStudents who require academic leave should follow the university's prescribed leave procedure and submit the required documentation within the specified period. Approval of leave is subject to university rules.",
+        "score": 1.5058974889892984
+      },
+      {
+        "chunk": "Academic Support\nStudents who have questions about academic procedures should contact the appropriate faculty member, academic department, student support office, or university administration.",
+        "score": 0.09335504680843819
+      }
+    ],
+    "latency_seconds": 6.411
+  },
+  {
+    "id": 18,
+    "category": "Leave",
+    "question": "Is academic leave automatically approved?",
+    "expected_answer": "No. Approval of leave is subject to university rules.",
+    "model": "mistral:7b",
+    "answer": " No, academic leave is not automatically approved. Approval of leave is subject to university rules, and students must follow the prescribed leave procedure and submit the required documentation within the specified period.",
+    "rag_used": true,
+    "llm_used": true,
+    "retrieved_context": [
+      {
+        "chunk": "Leave Policy\nStudents who require academic leave should follow the university's prescribed leave procedure and submit the required documentation within the specified period. Approval of leave is subject to university rules.",
+        "score": 1.505860191025686
+      },
+      {
+        "chunk": "Academic Support\nStudents who have questions about academic procedures should contact the appropriate faculty member, academic department, student support office, or university administration.",
+        "score": 0.11914987112119911
+      }
+    ],
+    "latency_seconds": 6.279
+  },
+  {
+    "id": 19,
+    "category": "Leave",
+    "question": "Who decides whether academic leave is approved?",
+    "expected_answer": "Approval of academic leave is subject to university rules. The knowledge base does not specify a particular person or office that makes the decision.",
+    "model": "mistral:7b",
+    "answer": " In the provided context, it is stated that approval of academic leave is subject to university rules. However, the context does not specify who exactly makes the decision regarding academic leave approval. It could be university administration, faculty members, or designated staff within the student support office. To get a more precise answer, one would need to consult the specific university's regulations or contact the university administration directly.",
+    "rag_used": true,
+    "llm_used": true,
+    "retrieved_context": [
+      {
+        "chunk": "Leave Policy\nStudents who require academic leave should follow the university's prescribed leave procedure and submit the required documentation within the specified period. Approval of leave is subject to university rules.",
+        "score": 1.505860191025686
+      },
+      {
+        "chunk": "Academic Support\nStudents who have questions about academic procedures should contact the appropriate faculty member, academic department, student support office, or university administration.",
+        "score": 0.11914987112119911
+      }
+    ],
+    "latency_seconds": 11.382
+  },
+  {
+    "id": 20,
+    "category": "Leave",
+    "question": "When should students submit documents for academic leave?",
+    "expected_answer": "Students should submit the required documentation within the specified period according to the university's prescribed leave procedure.",
+    "model": "mistral:7b",
+    "answer": " According to the provided context, students should submit documents for academic leave within the specified period that is part of the university's prescribed leave procedure. The exact date or period is not specified in the context, so students should refer to the university's official regulations or guidelines for the correct submission date.",
+    "rag_used": true,
+    "llm_used": true,
+    "retrieved_context": [
+      {
+        "chunk": "Leave Policy\nStudents who require academic leave should follow the university's prescribed leave procedure and submit the required documentation within the specified period. Approval of leave is subject to university rules.",
+        "score": 1.503911856269776
+      },
+      {
+        "chunk": "Academic Support\nStudents who have questions about academic procedures should contact the appropriate faculty member, academic department, student support office, or university administration.",
+        "score": 0.11509774006460857
+      }
+    ],
+    "latency_seconds": 9.485
+  },
+  {
+    "id": 21,
+    "category": "Grading",
+    "question": "How are students evaluated?",
+    "expected_answer": "Students are evaluated according to the assessment structure defined for their course.",
+    "model": "mistral:7b",
+    "answer": " Students are evaluated according to the assessment structure defined for their course. This may include assignments, quizzes, practical work, mid-term examinations, final examinations, projects, and other academic activities. (Answer)",
+    "rag_used": true,
+    "llm_used": true,
+    "retrieved_context": [
+      {
+        "chunk": "Grading Policy\nStudents are evaluated according to the assessment structure defined for their course. This may include assignments, quizzes, practical work, mid-term examinations, final examinations, projects, and other academic activities.",
+        "score": 0.23461162866643093
+      },
+      {
+        "chunk": "Attendance Policy\nStudents are expected to maintain the minimum attendance requirement specified by their university or course. Students who fall below the required attendance percentage may be subject to academic restrictions or may not be permitted to appear for certain examinations.",
+        "score": 0.03972293757914171
+      }
+    ],
+    "latency_seconds": 10.715
+  },
+  {
+    "id": 22,
+    "category": "Grading",
+    "question": "What activities can be included in student assessment?",
+    "expected_answer": "Student assessment may include assignments, quizzes, practical work, mid-term examinations, final examinations, projects, and other academic activities.",
+    "model": "mistral:7b",
+    "answer": " The information available in the knowledge base suggests that student assessment can include assignments, quizzes, practical work, mid-term examinations, final examinations, and projects. Other academic activities may also be part of the student assessment, but the context does not specify these. For a comprehensive list of all possible academic activities that could be included in student assessment, it is recommended to consult the appropriate faculty member, academic department, student support office, or university administration.",
+    "rag_used": true,
+    "llm_used": true,
+    "retrieved_context": [
+      {
+        "chunk": "Grading Policy\nStudents are evaluated according to the assessment structure defined for their course. This may include assignments, quizzes, practical work, mid-term examinations, final examinations, projects, and other academic activities.",
+        "score": 0.1936454314227446
+      },
+      {
+        "chunk": "Academic Support\nStudents who have questions about academic procedures should contact the appropriate faculty member, academic department, student support office, or university administration.",
+        "score": 0.0711849674672561
+      }
+    ],
+    "latency_seconds": 14.821
+  },
+  {
+    "id": 23,
+    "category": "Grading",
+    "question": "Can assignments and quizzes be part of the grading structure?",
+    "expected_answer": "Yes. Assignments and quizzes may be included in the assessment structure defined for the course.",
+    "model": "mistral:7b",
+    "answer": " Yes, according to the provided context, assignments and quizzes can be part of the grading structure as they are mentioned in the Grading Policy section.",
+    "rag_used": true,
+    "llm_used": true,
+    "retrieved_context": [
+      {
+        "chunk": "Grading Policy\nStudents are evaluated according to the assessment structure defined for their course. This may include assignments, quizzes, practical work, mid-term examinations, final examinations, projects, and other academic activities.",
+        "score": 1.342137750382768
+      },
+      {
+        "chunk": "Assignment Policy\nAssignments must be submitted before the deadline specified by the instructor. Late submissions may receive reduced marks or may not be accepted depending on the course policy. Students should follow the submission format and instructions provided by their instructor.",
+        "score": 1.0478345554338278
+      }
+    ],
+    "latency_seconds": 7.75
+  },
+  {
+    "id": 24,
+    "category": "Grading",
+    "question": "Can practical work and projects be included in assessment?",
+    "expected_answer": "Yes. Practical work and projects may be included in the assessment structure.",
+    "model": "mistral:7b",
+    "answer": " Yes, according to the provided context, practical work and projects can be included in assessment. The Grading Policy mentions that students are evaluated based on various academic activities, which includes practical work and projects.",
+    "rag_used": true,
+    "llm_used": true,
+    "retrieved_context": [
+      {
+        "chunk": "Grading Policy\nStudents are evaluated according to the assessment structure defined for their course. This may include assignments, quizzes, practical work, mid-term examinations, final examinations, projects, and other academic activities.",
+        "score": 0.353927981863889
+      },
+      {
+        "chunk": "Attendance Policy\nStudents are expected to maintain the minimum attendance requirement specified by their university or course. Students who fall below the required attendance percentage may be subject to academic restrictions or may not be permitted to appear for certain examinations.",
+        "score": 0.0
+      }
+    ],
+    "latency_seconds": 6.79
+  },
+  {
+    "id": 25,
+    "category": "Grading",
+    "question": "Are mid-term and final examinations part of student evaluation?",
+    "expected_answer": "Yes. Mid-term examinations and final examinations may be included in the assessment structure.",
+    "model": "mistral:7b",
+    "answer": " Yes, according to the provided Grading Policy, mid-term and final examinations are part of student evaluation.",
+    "rag_used": true,
+    "llm_used": true,
+    "retrieved_context": [
+      {
+        "chunk": "Examination Policy\nStudents must follow the examination schedule published by the university. Students should arrive at the examination venue before the scheduled start time and carry the required student identification and examination materials.",
+        "score": 1.0385437559049788
+      },
+      {
+        "chunk": "Grading Policy\nStudents are evaluated according to the assessment structure defined for their course. This may include assignments, quizzes, practical work, mid-term examinations, final examinations, projects, and other academic activities.",
+        "score": 0.3986947086007228
+      }
+    ],
+    "latency_seconds": 4.675
+  },
+  {
+    "id": 26,
+    "category": "Academic Support",
+    "question": "Who should students contact if they have questions about academic procedures?",
+    "expected_answer": "Students should contact the appropriate faculty member, academic department, student support office, or university administration.",
+    "model": "mistral:7b",
+    "answer": " Students should contact the appropriate faculty member, academic department, student support office, or university administration if they have questions about academic procedures, according to the provided context.",
+    "rag_used": true,
+    "llm_used": true,
+    "retrieved_context": [
+      {
+        "chunk": "Academic Support\nStudents who have questions about academic procedures should contact the appropriate faculty member, academic department, student support office, or university administration.",
+        "score": 0.4593811551162916
+      },
+      {
+        "chunk": "Attendance Policy\nStudents are expected to maintain the minimum attendance requirement specified by their university or course. Students who fall below the required attendance percentage may be subject to academic restrictions or may not be permitted to appear for certain examinations.",
+        "score": 0.047317550643601256
+      }
+    ],
+    "latency_seconds": 8.795
+  },
+  {
+    "id": 27,
+    "category": "Academic Support",
+    "question": "Where can students get help with academic procedures?",
+    "expected_answer": "Students can get help from the appropriate faculty member, academic department, student support office, or university administration.",
+    "model": "mistral:7b",
+    "answer": " The information in the knowledge base suggests that students with questions about academic procedures should contact the appropriate faculty member, academic department, student support office, or university administration.",
+    "rag_used": true,
+    "llm_used": true,
+    "retrieved_context": [
+      {
+        "chunk": "Academic Support\nStudents who have questions about academic procedures should contact the appropriate faculty member, academic department, student support office, or university administration.",
+        "score": 0.352602775059549
+      },
+      {
+        "chunk": "Attendance Policy\nStudents are expected to maintain the minimum attendance requirement specified by their university or course. Students who fall below the required attendance percentage may be subject to academic restrictions or may not be permitted to appear for certain examinations.",
+        "score": 0.06981432770401552
+      }
+    ],
+    "latency_seconds": 5.658
+  },
+  {
+    "id": 28,
+    "category": "Outside Knowledge Base",
+    "question": "What is the minimum attendance percentage required at this university?",
+    "expected_answer": "The exact minimum attendance percentage is not specified in the knowledge base.",
+    "model": "mistral:7b",
+    "answer": " The information about the minimum attendance percentage required at this university is not available in the provided knowledge base context.",
+    "rag_used": true,
+    "llm_used": true,
+    "retrieved_context": [
+      {
+        "chunk": "Attendance Policy\nStudents are expected to maintain the minimum attendance requirement specified by their university or course. Students who fall below the required attendance percentage may be subject to academic restrictions or may not be permitted to appear for certain examinations.",
+        "score": 1.4845206673082703
+      },
+      {
+        "chunk": "Leave Policy\nStudents who require academic leave should follow the university's prescribed leave procedure and submit the required documentation within the specified period. Approval of leave is subject to university rules.",
+        "score": 0.07102532241297366
+      }
+    ],
+    "latency_seconds": 4.31
+  },
+  {
+    "id": 29,
+    "category": "Outside Knowledge Base",
+    "question": "What is the maximum number of days of academic leave allowed?",
+    "expected_answer": "The maximum number of academic leave days is not specified in the knowledge base.",
+    "model": "mistral:7b",
+    "answer": " The information about the maximum number of days of academic leave allowed is not available in the provided knowledge base context. Students are advised to refer to the university's prescribed leave procedure for specific details.",
+    "rag_used": true,
+    "llm_used": true,
+    "retrieved_context": [
+      {
+        "chunk": "Leave Policy\nStudents who require academic leave should follow the university's prescribed leave procedure and submit the required documentation within the specified period. Approval of leave is subject to university rules.",
+        "score": 1.505860191025686
+      },
+      {
+        "chunk": "Academic Support\nStudents who have questions about academic procedures should contact the appropriate faculty member, academic department, student support office, or university administration.",
+        "score": 0.11914987112119911
+      }
+    ],
+    "latency_seconds": 7.018
+  },
+  {
+    "id": 30,
+    "category": "Outside Knowledge Base",
+    "question": "What is the exact penalty percentage for submitting an assignment late?",
+    "expected_answer": "The exact late-submission penalty percentage is not specified in the knowledge base. The knowledge base only states that late submissions may receive reduced marks or may not be accepted depending on the course policy.",
+    "model": "mistral:7b",
+    "answer": " The provided context does not specify an exact penalty percentage for submitting an assignment late. The penalty may vary depending on the course policy, and could range from reduced marks to the assignment not being accepted at all. For specific details, students should refer to the policies outlined for their individual courses.",
+    "rag_used": true,
+    "llm_used": true,
+    "retrieved_context": [
+      {
+        "chunk": "Assignment Policy\nAssignments must be submitted before the deadline specified by the instructor. Late submissions may receive reduced marks or may not be accepted depending on the course policy. Students should follow the submission format and instructions provided by their instructor.",
+        "score": 1.1775576346213725
+      },
+      {
+        "chunk": "Attendance Policy\nStudents are expected to maintain the minimum attendance requirement specified by their university or course. Students who fall below the required attendance percentage may be subject to academic restrictions or may not be permitted to appear for certain examinations.",
+        "score": 0.08625839412213396
+      }
+    ],
+    "latency_seconds": 9.12
+  }
+]
