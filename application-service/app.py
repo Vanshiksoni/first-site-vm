@@ -6,7 +6,7 @@ import requests
 app = FastAPI(title="University Student Helpdesk")
 
 RETRIEVAL_URL = "http://week4-retrieval:8001/search"
-LLM_URL = "http://week4-llm:8000/generate"
+LLM_URL = "http://172.17.0.1:8010/generate"
 
 class QuestionRequest(BaseModel):
     question: str

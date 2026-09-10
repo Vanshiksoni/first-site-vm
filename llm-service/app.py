@@ -5,13 +5,14 @@ import requests
 
 app = FastAPI(title="Week 3 LLM Service")
 
-OLLAMA_URL = "http://host.docker.internal:11434/api/generate"
-MODEL = "mistral:7b"
+OLLAMA_URL = "http://172.17.0.1:11434/api/generate"
+MODEL = "qwen2.5-coder:3b"
 
 
 class GenerateRequest(BaseModel):
     prompt: str
     context: str = ""
+    model: str = MODEL
 
 
 @app.get("/")
@@ -42,7 +43,7 @@ Answer the question using the provided context. If the context does not contain 
         final_prompt = request.prompt
 
     payload = {
-        "model": MODEL,
+        "model": request.model,
         "prompt": final_prompt,
         "stream": False,
         "options": {
