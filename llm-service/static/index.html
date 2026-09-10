@@ -3,92 +3,282 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LLM Service - Code Llama</title>
-
+    <title>LLM Generation Service Playground</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
+        :root {
+            --bg-dark: #090d16;
+            --bg-card: rgba(18, 24, 38, 0.7);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-highlight: rgba(168, 85, 247, 0.4);
+            --accent-glow: #a855f7;
+            --purple-glow: #8b5cf6;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --text-dim: #6b7280;
         }
 
-        h1 {
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(168, 85, 247, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(99, 102, 241, 0.12) 0%, transparent 40%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 20px 60px;
+        }
+
+        .wrapper {
+            width: 100%;
+            max-width: 960px;
+        }
+
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 20px;
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            margin-bottom: 30px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .brand img {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            object-fit: cover;
+            border: 1px solid var(--border-highlight);
+        }
+
+        .brand-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .nav-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .nav-pill:hover, .nav-pill.active {
+            color: white;
+            background: rgba(168, 85, 247, 0.2);
+            border-color: var(--accent-glow);
+        }
+
+        .hero {
             text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .hero h1 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 2.3rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #ffffff 30%, #d8b4fe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1rem;
+            color: var(--text-muted);
+        }
+
+        .card {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 28px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            margin-bottom: 25px;
         }
 
         textarea {
             width: 100%;
-            height: 150px;
-            padding: 10px;
-            font-size: 16px;
-            box-sizing: border-box;
+            min-height: 140px;
+            background: rgba(9, 13, 22, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 16px 18px;
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 1rem;
+            line-height: 1.6;
+            resize: vertical;
+            outline: none;
+            transition: all 0.2s ease;
+            margin-bottom: 16px;
         }
 
-        button {
-            margin-top: 15px;
-            padding: 12px 25px;
-            font-size: 16px;
+        textarea:focus {
+            border-color: var(--accent-glow);
+            box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.2);
+        }
+
+        .btn-generate {
+            background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 14px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            font-family: inherit;
             cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        #response {
-            margin-top: 25px;
+        .btn-generate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(168, 85, 247, 0.4);
+        }
+
+        .response-card {
+            background: rgba(13, 18, 30, 0.7);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
             padding: 20px;
-            border: 1px solid #ccc;
-            min-height: 100px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .response-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 12px;
+        }
+
+        .response-body {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: #e2e8f0;
             white-space: pre-wrap;
+        }
+
+        footer {
+            margin-top: auto;
+            padding-top: 40px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-dim);
         }
     </style>
 </head>
-
 <body>
 
-    <h1>Code Llama LLM Service</h1>
+<div class="wrapper">
 
-    <p>Enter a prompt:</p>
+    <header class="top-nav">
+        <a href="/ui" class="brand">
+            <img src="/ui/avatar.jpg" alt="Logo">
+            <span class="brand-title">LLM Service Playground</span>
+        </a>
+        <nav class="nav-links">
+            <a href="http://localhost:8002/ui" class="nav-pill" target="_blank">🎓 Helpdesk</a>
+            <a href="http://localhost:8001/ui" class="nav-pill" target="_blank">📚 Retrieval DB</a>
+            <a href="/ui" class="nav-pill active">⚡ LLM Service</a>
+        </nav>
+    </header>
 
-    <textarea id="prompt"
-        placeholder="Example: Explain Docker in simple terms..."></textarea>
+    <section class="hero">
+        <h1>Mistral 7B / Code Llama Playground</h1>
+        <p>Directly trigger local LLM generation prompts via Ollama orchestration.</p>
+    </section>
 
-    <br>
+    <main class="card">
+        <textarea id="prompt" placeholder="Enter prompt or instructions..."></textarea>
+        <button class="btn-generate" onclick="generateResponse()">⚡ Generate Response</button>
 
-    <button onclick="generateResponse()">Generate Response</button>
+        <div id="responseCard" class="response-card">
+            <div class="response-title">Response Output</div>
+            <div id="responseBody" class="response-body"></div>
+        </div>
+    </main>
 
-    <div id="response">Response will appear here...</div>
+    <footer>
+        Ollama Integration Service &bull; Mistral 7B / Code Llama Model Runner
+    </footer>
 
-    <script>
-        async function generateResponse() {
-            const prompt = document.getElementById("prompt").value;
-            const responseBox = document.getElementById("response");
+</div>
 
-            if (!prompt.trim()) {
-                responseBox.textContent = "Please enter a prompt.";
-                return;
-            }
+<script>
+    async function generateResponse() {
+        const prompt = document.getElementById("prompt").value;
+        const responseCard = document.getElementById("responseCard");
+        const responseBody = document.getElementById("responseBody");
 
-            responseBox.textContent = "Generating response...";
-
-            try {
-                const response = await fetch("/generate", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        prompt: prompt
-                    })
-                });
-
-                const data = await response.json();
-
-                responseBox.textContent = data.response;
-            } catch (error) {
-                responseBox.textContent =
-                    "Error connecting to LLM service: " + error;
-            }
+        if (!prompt.trim()) {
+            alert("Please enter a prompt.");
+            return;
         }
-    </script>
+
+        responseCard.style.display = "block";
+        responseBody.textContent = "Generating response via LLM service...";
+
+        try {
+            const response = await fetch("/generate", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ prompt: prompt })
+            });
+
+            const data = await response.json();
+            responseBody.textContent = data.response;
+        } catch (error) {
+            responseBody.textContent = "Error connecting to LLM service: " + error.message;
+        }
+    }
+</script>
 
 </body>
 </html>

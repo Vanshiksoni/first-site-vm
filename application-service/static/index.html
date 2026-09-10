@@ -3,242 +3,769 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>University Student Helpdesk</title>
-
+    <title>University Student Helpdesk AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        :root {
+            --bg-dark: #090d16;
+            --bg-card: rgba(18, 24, 38, 0.7);
+            --bg-card-hover: rgba(26, 34, 54, 0.85);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-highlight: rgba(99, 102, 241, 0.4);
+            --primary-glow: #6366f1;
+            --accent-glow: #a855f7;
+            --cyan-glow: #06b6d4;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --text-dim: #6b7280;
+            --success-bg: rgba(16, 185, 129, 0.15);
+            --success-text: #34d399;
+            --success-border: rgba(16, 185, 129, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
             margin: 0;
-            background: #f4f6f8;
-            color: #222;
+            padding: 0;
         }
 
-        .container {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 20px;
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 85% 75%, rgba(168, 85, 247, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.05) 0%, transparent 60%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 20px 60px;
         }
 
-        h1 {
-            margin-bottom: 5px;
+        .wrapper {
+            width: 100%;
+            max-width: 960px;
         }
 
-        .subtitle {
-            color: #666;
-            margin-bottom: 25px;
+        /* Top Header Nav */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 20px;
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            margin-bottom: 30px;
         }
 
-        .question-box {
-            background: white;
-            padding: 20px;
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .brand img {
+            width: 38px;
+            height: 38px;
             border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            object-fit: cover;
+            border: 1px solid var(--border-highlight);
+        }
+
+        .brand-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .nav-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .nav-pill:hover, .nav-pill.active {
+            color: white;
+            background: rgba(99, 102, 241, 0.2);
+            border-color: var(--primary-glow);
+        }
+
+        /* Hero Header */
+        .hero {
+            text-align: center;
+            margin-bottom: 35px;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            border-radius: 30px;
+            background: rgba(99, 102, 241, 0.12);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            color: #a5b4fc;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .hero-badge .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #34d399;
+            box-shadow: 0 0 10px #34d399;
+        }
+
+        .hero h1 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1.25;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #ffffff 30%, #a5b4fc 70%, #c084fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            max-width: 620px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Question Box Card */
+        .card {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 28px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: border-color 0.3s ease;
+        }
+
+        .card:focus-within {
+            border-color: var(--border-highlight);
+        }
+
+        .quick-prompts-label {
+            font-size: 0.82rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-dim);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .prompt-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .pill-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 8px 14px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .pill-btn:hover {
+            background: rgba(99, 102, 241, 0.15);
+            border-color: rgba(99, 102, 241, 0.4);
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+
+        .input-container {
+            position: relative;
+            margin-bottom: 16px;
         }
 
         textarea {
             width: 100%;
-            box-sizing: border-box;
-            min-height: 100px;
-            padding: 14px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
+            min-height: 120px;
+            background: rgba(9, 13, 22, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 16px 18px;
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 1rem;
+            line-height: 1.6;
             resize: vertical;
+            outline: none;
+            transition: all 0.2s ease;
         }
 
-        button {
-            margin-top: 12px;
-            padding: 14px 24px;
-            font-size: 16px;
-            border: none;
-            border-radius: 8px;
-            background: #222;
+        textarea:focus {
+            border-color: var(--primary-glow);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+            background: rgba(9, 13, 22, 0.8);
+        }
+
+        textarea::placeholder {
+            color: var(--text-dim);
+        }
+
+        .action-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .shortcut-hint {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        kbd {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
             color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 14px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            font-family: inherit;
             cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.35);
+            transition: all 0.2s ease;
         }
 
-        button:disabled {
+        .btn-submit:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(99, 102, 241, 0.5);
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+        }
+
+        .btn-submit:disabled {
             opacity: 0.6;
-            cursor: wait;
+            cursor: not-allowed;
+            transform: none;
         }
 
-        #status {
-            margin-top: 15px;
-            color: #666;
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: none;
         }
 
-        .answer {
-            margin-top: 25px;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
-        .answer-text {
-            line-height: 1.7;
-            white-space: pre-wrap;
+        /* Status & Alert */
+        #statusAlert {
+            margin-top: 16px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            display: none;
+            padding: 12px 16px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+        }
+
+        /* Answer Output Area */
+        .answer-section {
+            margin-top: 30px;
+            display: none;
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .meta-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .badge-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .badge {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 7px 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
             border-radius: 20px;
-            background: #e8f5e9;
-            color: #256029;
-            font-weight: bold;
+            font-size: 0.82rem;
+            font-weight: 600;
         }
 
-        .context {
-            margin-top: 25px;
+        .badge-rag {
+            background: var(--success-bg);
+            color: var(--success-text);
+            border: 1px solid var(--success-border);
+        }
+
+        .badge-model {
+            background: rgba(168, 85, 247, 0.15);
+            color: #d8b4fe;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+        }
+
+        .btn-copy {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 6px 14px;
+            border-radius: 10px;
+            font-size: 0.82rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-copy:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .answer-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 28px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            margin-bottom: 25px;
+        }
+
+        .answer-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .answer-content {
+            font-size: 1rem;
+            line-height: 1.75;
+            color: #e2e8f0;
+            white-space: pre-wrap;
+        }
+
+        .answer-content ul, .answer-content ol {
+            margin-left: 20px;
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+
+        /* Context Section */
+        .context-header {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .context-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 14px;
         }
 
         .context-card {
-            background: #fafafa;
-            padding: 15px;
-            margin-top: 10px;
-            border-radius: 8px;
-            border: 1px solid #ddd;
+            background: rgba(13, 18, 30, 0.7);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 18px;
+            transition: all 0.2s ease;
         }
 
-        .score {
-            font-weight: bold;
-            margin-bottom: 8px;
+        .context-card:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+            background: rgba(18, 24, 38, 0.9);
+        }
+
+        .score-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .score-title {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .score-value {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--cyan-glow);
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #06b6d4 0%, #6366f1 100%);
+            border-radius: 3px;
+            transition: width 0.6s ease;
+        }
+
+        .chunk-text {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        footer {
+            margin-top: auto;
+            padding-top: 40px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-dim);
         }
     </style>
 </head>
-
 <body>
 
-<div class="container">
+<div class="wrapper">
 
-    <h1>🎓 University Student Helpdesk</h1>
+    <!-- Navigation Header -->
+    <header class="top-nav">
+        <a href="/ui" class="brand">
+            <img src="/ui/avatar.jpg" alt="University AI Logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%236366f1\'><path d=\'M12 3L1 9l11 6 9-4.91V17h2V9L12 3z\'/></svg>'">
+            <span class="brand-title">University Helpdesk AI</span>
+        </a>
+        <nav class="nav-links">
+            <a href="/ui" class="nav-pill active">🎓 Helpdesk</a>
+            <a href="http://localhost:8001/ui" class="nav-pill" target="_blank">📚 Retrieval DB</a>
+            <a href="http://localhost:8000/ui" class="nav-pill" target="_blank">⚡ LLM Service</a>
+        </nav>
+    </header>
 
-    <div class="subtitle">
-        Ask questions about university academic policies
-    </div>
+    <!-- Hero Title -->
+    <section class="hero">
+        <div class="hero-badge">
+            <span class="dot"></span> AI RAG Engine Active
+        </div>
+        <h1>Academic Policy Assistant</h1>
+        <p>Instant, accurate answers regarding university rules, grading policies, assignment guidelines, and academic procedures.</p>
+    </section>
 
-    <div class="question-box">
+    <!-- Main Query Card -->
+    <main class="card">
 
-        <textarea
-            id="question"
-            placeholder="Example: What are the rules for assignments?"
-        ></textarea>
+        <div class="quick-prompts-label">
+            💡 Quick Prompt Suggestions
+        </div>
 
-        <button id="askButton" onclick="askQuestion()">
-            Ask Helpdesk
-        </button>
+        <div class="prompt-pills">
+            <button class="pill-btn" onclick="fillPrompt('What are the rules and guidelines for assignment submissions?')">
+                📋 Assignment Rules
+            </button>
+            <button class="pill-btn" onclick="fillPrompt('What is the university policy on late submissions and extensions?')">
+                ⏳ Late Submissions
+            </button>
+            <button class="pill-btn" onclick="fillPrompt('How does the academic grading system and pass criteria work?')">
+                📊 Grading System
+            </button>
+            <button class="pill-btn" onclick="fillPrompt('What are the attendance requirements for lectures and exams?')">
+                🏫 Attendance Policy
+            </button>
+        </div>
 
-        <div id="status"></div>
+        <div class="input-container">
+            <textarea
+                id="question"
+                placeholder="Ask any question about university policies or guidelines..."
+            ></textarea>
+        </div>
 
-    </div>
+        <div class="action-row">
+            <div class="shortcut-hint">
+                Press <kbd>Ctrl</kbd> + <kbd>Enter</kbd> to submit
+            </div>
 
-    <div id="answerSection"></div>
+            <button id="askButton" class="btn-submit" onclick="askQuestion()">
+                <span id="btnSpinner" class="spinner"></span>
+                <span id="btnText">Ask Helpdesk</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+            </button>
+        </div>
+
+        <div id="statusAlert"></div>
+
+    </main>
+
+    <!-- Answer & Context Output Section -->
+    <section id="answerSection" class="answer-section">
+
+        <div class="meta-bar">
+            <div class="badge-group">
+                <span id="ragBadge" class="badge badge-rag">
+                    ✓ RAG Context Retrieved
+                </span>
+                <span id="modelBadge" class="badge badge-model">
+                    🤖 Mistral 7B / Code Llama
+                </span>
+            </div>
+
+            <button class="btn-copy" onclick="copyAnswer()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+                <span id="copyBtnText">Copy Answer</span>
+            </button>
+        </div>
+
+        <article class="answer-card">
+            <h2 class="answer-title">
+                <span>✨ Generated Answer</span>
+            </h2>
+            <div id="answerText" class="answer-content"></div>
+        </article>
+
+        <div class="context-header">
+            <span>📚 Verified Knowledge Source</span>
+        </div>
+
+        <div id="contextGrid" class="context-grid"></div>
+
+    </section>
+
+    <footer>
+        University Student Helpdesk AI &bull; Orchestrated via RAG Microservice Architecture
+    </footer>
 
 </div>
 
 <script>
+    const questionInput = document.getElementById("question");
+    const askButton = document.getElementById("askButton");
+    const btnSpinner = document.getElementById("btnSpinner");
+    const btnText = document.getElementById("btnText");
+    const statusAlert = document.getElementById("statusAlert");
+    const answerSection = document.getElementById("answerSection");
+    const answerText = document.getElementById("answerText");
+    const contextGrid = document.getElementById("contextGrid");
+    const modelBadge = document.getElementById("modelBadge");
 
-async function askQuestion() {
+    // Shortcut Ctrl+Enter
+    questionInput.addEventListener("keydown", function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
+            e.preventDefault();
+            askQuestion();
+        }
+    });
 
-    const question =
-        document.getElementById("question").value.trim();
-
-    const button =
-        document.getElementById("askButton");
-
-    const status =
-        document.getElementById("status");
-
-    const answerSection =
-        document.getElementById("answerSection");
-
-    if (!question) {
-        status.textContent = "Please enter a question.";
-        return;
+    function fillPrompt(text) {
+        questionInput.value = text;
+        questionInput.focus();
     }
 
-    button.disabled = true;
-    status.textContent =
-        "Searching the knowledge base and generating an answer...";
+    async function askQuestion() {
+        const question = questionInput.value.trim();
 
-    answerSection.innerHTML = "";
-
-    try {
-
-        const response = await fetch("/ask", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                question: question
-            })
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(data.detail || "Request failed");
+        if (!question) {
+            showStatus("Please enter a question before submitting.", "warning");
+            return;
         }
 
-        status.textContent = "Answer generated successfully.";
+        // Set Loading UI
+        askButton.disabled = true;
+        btnSpinner.style.display = "inline-block";
+        btnText.textContent = "Processing...";
+        showStatus("Searching knowledge base & generating response...", "info");
+        answerSection.style.display = "none";
 
-        let contextHTML = "";
+        try {
+            const response = await fetch("/ask", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ question: question })
+            });
 
-        data.retrieved_context.forEach((item, index) => {
+            const data = await response.json();
 
-            contextHTML += `
-                <div class="context-card">
-                    <div class="score">
-                        Result ${index + 1}
-                        — Similarity Score:
-                        ${item.score.toFixed(4)}
-                    </div>
-                    <div>${item.chunk}</div>
-                </div>
-            `;
-        });
+            if (!response.ok) {
+                throw new Error(data.detail || "Server error occurred");
+            }
 
-        answerSection.innerHTML = `
-            <div class="answer">
+            hideStatus();
 
-                <h2>Answer</h2>
+            // Populate Answer & Badges
+            answerText.innerHTML = formatText(data.answer);
+            modelBadge.textContent = "🤖 " + (data.model || "Code Llama");
 
-                <div class="answer-text">
-                    ${data.answer}
-                </div>
+            // Populate Context Chunks
+            contextGrid.innerHTML = "";
 
-                <div class="badge">
-                    ✓ RAG Used
-                </div>
+            if (data.retrieved_context && data.retrieved_context.length > 0) {
+                data.retrieved_context.forEach((item, index) => {
+                    const scorePct = Math.round(item.score * 100);
+                    const card = document.createElement("div");
+                    card.className = "context-card";
+                    card.innerHTML = `
+                        <div class="score-row">
+                            <span class="score-title">
+                                📌 Knowledge Chunk #${index + 1}
+                            </span>
+                            <span class="score-value">
+                                ${scorePct}% Match (${item.score.toFixed(4)})
+                            </span>
+                        </div>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" style="width: ${Math.min(100, Math.max(10, scorePct))}%"></div>
+                        </div>
+                        <div class="chunk-text">${escapeHtml(item.chunk)}</div>
+                    `;
+                    contextGrid.appendChild(card);
+                });
+            } else {
+                contextGrid.innerHTML = `<div class="context-card"><div class="chunk-text">No direct knowledge chunk match found.</div></div>`;
+            }
 
-                <div class="context">
+            answerSection.style.display = "block";
+            answerSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-                    <h3>Retrieved Knowledge</h3>
-
-                    ${contextHTML}
-
-                </div>
-
-            </div>
-        `;
-
-    } catch (error) {
-
-        status.textContent =
-            "Unable to process the question.";
-
-        console.error(error);
-
-    } finally {
-
-        button.disabled = false;
-
+        } catch (error) {
+            console.error(error);
+            showStatus("Unable to connect or process question: " + error.message, "error");
+        } finally {
+            askButton.disabled = false;
+            btnSpinner.style.display = "none";
+            btnText.textContent = "Ask Helpdesk";
+        }
     }
-}
 
+    function showStatus(msg, type) {
+        statusAlert.style.display = "block";
+        statusAlert.textContent = msg;
+    }
+
+    function hideStatus() {
+        statusAlert.style.display = "none";
+    }
+
+    function copyAnswer() {
+        const text = answerText.innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            const btnCopyText = document.getElementById("copyBtnText");
+            btnCopyText.textContent = "Copied!";
+            setTimeout(() => { btnCopyText.textContent = "Copy Answer"; }, 2000);
+        });
+    }
+
+    function escapeHtml(str) {
+        return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    function formatText(text) {
+        if (!text) return "";
+        let escaped = escapeHtml(text);
+        // Simple markdown bold & bullet formatting
+        escaped = escaped.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        escaped = escaped.replace(/`([^`]+)`/g, '<code>$1</code>');
+        return escaped;
+    }
 </script>
 
 </body>
