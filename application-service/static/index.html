@@ -23,6 +23,9 @@
             --success-bg: rgba(16, 185, 129, 0.15);
             --success-text: #34d399;
             --success-border: rgba(16, 185, 129, 0.3);
+            --warning-bg: rgba(245, 158, 11, 0.15);
+            --warning-text: #fbbf24;
+            --warning-border: rgba(245, 158, 11, 0.3);
         }
 
         * {
@@ -356,6 +359,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            flex-wrap: wrap;
         }
 
         .badge {
@@ -374,10 +378,16 @@
             border: 1px solid var(--success-border);
         }
 
-        .badge-model {
+        .badge-llm {
             background: rgba(168, 85, 247, 0.15);
             color: #d8b4fe;
             border: 1px solid rgba(168, 85, 247, 0.3);
+        }
+
+        .badge-fallback {
+            background: var(--warning-bg);
+            color: var(--warning-text);
+            border: 1px solid var(--warning-border);
         }
 
         .btn-copy {
@@ -598,9 +608,12 @@
         <div class="meta-bar">
             <div class="badge-group">
                 <span id="ragBadge" class="badge badge-rag">
-                    ✓ RAG Context Retrieved
+                    ✓ RAG Context Used
                 </span>
-                <span id="modelBadge" class="badge badge-model">
+                <span id="llmBadge" class="badge badge-llm">
+                    ⚡ LLM Active
+                </span>
+                <span id="modelBadge" class="badge badge-llm">
                     🤖 Mistral 7B / Code Llama
                 </span>
             </div>
@@ -645,6 +658,8 @@
     const answerText = document.getElementById("answerText");
     const contextGrid = document.getElementById("contextGrid");
     const modelBadge = document.getElementById("modelBadge");
+    const llmBadge = document.getElementById("llmBadge");
+    const ragBadge = document.getElementById("ragBadge");
 
     // Shortcut Ctrl+Enter
     questionInput.addEventListener("keydown", function(e) {
@@ -686,7 +701,7 @@
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data.detail || "Server error occurred");
+                throw new Error(data.detail || data.error || "Server error occurred");
             }
 
             hideStatus();
@@ -695,12 +710,29 @@
             answerText.innerHTML = formatText(data.answer);
             modelBadge.textContent = "🤖 " + (data.model || "Code Llama");
 
+            if (data.llm_used !== false) {
+                llmBadge.textContent = "⚡ LLM Used";
+                llmBadge.className = "badge badge-llm";
+            } else {
+                llmBadge.textContent = "⚠️ Fallback Answer";
+                llmBadge.className = "badge badge-fallback";
+            }
+
+            if (data.rag_used !== false) {
+                ragBadge.textContent = "✓ RAG Context Used";
+                ragBadge.className = "badge badge-rag";
+            } else {
+                ragBadge.textContent = "✗ No RAG Context";
+                ragBadge.className = "badge badge-fallback";
+            }
+
             // Populate Context Chunks
             contextGrid.innerHTML = "";
 
             if (data.retrieved_context && data.retrieved_context.length > 0) {
                 data.retrieved_context.forEach((item, index) => {
-                    const scorePct = Math.round(item.score * 100);
+                    const scorePct = typeof item.score === "number" ? Math.round(item.score * 100) : 0;
+                    const scoreText = typeof item.score === "number" ? item.score.toFixed(4) : "N/A";
                     const card = document.createElement("div");
                     card.className = "context-card";
                     card.innerHTML = `
@@ -709,13 +741,13 @@
                                 📌 Knowledge Chunk #${index + 1}
                             </span>
                             <span class="score-value">
-                                ${scorePct}% Match (${item.score.toFixed(4)})
+                                ${scorePct}% Match (${scoreText})
                             </span>
                         </div>
                         <div class="progress-bar-bg">
                             <div class="progress-bar-fill" style="width: ${Math.min(100, Math.max(10, scorePct))}%"></div>
                         </div>
-                        <div class="chunk-text">${escapeHtml(item.chunk)}</div>
+                        <div class="chunk-text">${escapeHtml(item.chunk || "")}</div>
                     `;
                     contextGrid.appendChild(card);
                 });

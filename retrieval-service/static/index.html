@@ -290,7 +290,10 @@
         results.innerHTML = "";
 
         try {
-            const response = await fetch("/search?query=" + encodeURIComponent(query));
+            let response = await fetch("/search?query=" + encodeURIComponent(query));
+            if (!response.ok) {
+                response = await fetch("/search?q=" + encodeURIComponent(query));
+            }
             const data = await response.json();
 
             if (data.error) {
@@ -298,20 +301,22 @@
                 return;
             }
 
-            status.textContent = `Found ${data.relevant_context.length} relevant vector chunks for: "${data.query}"`;
+            const retrieved = data.relevant_context || [];
+            status.textContent = `Found ${retrieved.length} relevant vector chunks for: "${query}"`;
 
-            data.relevant_context.forEach((item, index) => {
+            retrieved.forEach((item, index) => {
                 const card = document.createElement("div");
                 card.className = "result-card";
 
-                const scorePct = Math.round(item.score * 100);
+                let score = typeof item.score === "number" ? item.score : 0;
+                const scorePct = score <= 1 ? Math.round(score * 100) : Math.round(score);
 
                 card.innerHTML = `
                     <div class="score-row">
                         <span style="font-weight: 600; color: white;">Result #${index + 1}</span>
-                        <span class="score-badge">Similarity Score: ${item.score.toFixed(4)} (${scorePct}%)</span>
+                        <span class="score-badge">Similarity Score: ${score.toFixed(4)} (${scorePct}%)</span>
                     </div>
-                    <div class="chunk-content">${escapeHtml(item.chunk)}</div>
+                    <div class="chunk-content">${escapeHtml(item.chunk || "")}</div>
                 `;
 
                 results.appendChild(card);
