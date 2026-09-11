@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
@@ -5,8 +6,8 @@ import requests
 
 app = FastAPI(title="Week 3 LLM Service")
 
-OLLAMA_URL = "http://172.17.0.1:11434/api/generate"
-MODEL = "qwen2.5-coder:3b"
+OLLAMA_URL = os.getenv("OLLAMA_URL", "http://host.docker.internal:11434/api/generate")
+MODEL = os.getenv("MODEL", "llama3.2:3b")
 
 
 class GenerateRequest(BaseModel):

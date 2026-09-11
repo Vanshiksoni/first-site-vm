@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
@@ -5,8 +6,8 @@ import requests
 
 app = FastAPI(title="University Student Helpdesk")
 
-RETRIEVAL_URL = "http://week4-retrieval:8001/search"
-LLM_URL = "http://172.17.0.1:8010/generate"
+RETRIEVAL_URL = os.getenv("RETRIEVAL_URL", "http://retrieval-service:8001/search")
+LLM_URL = os.getenv("LLM_URL", "http://llm-service:8000/generate")
 
 class QuestionRequest(BaseModel):
     question: str
@@ -24,19 +25,23 @@ def root():
 def ask(request: QuestionRequest):
 
     # Step 1: Retrieve relevant knowledge
-    retrieval_response = requests.get(
-        RETRIEVAL_URL,
-        params={"query": request.question},
-        timeout=30
-    )
-    retrieval_response.raise_for_status()
-
-    retrieval_data = retrieval_response.json()
-
-    relevant_context = "\n\n".join(
-        item["chunk"]
-        for item in retrieval_data["relevant_context"]
-    )
+    try:
+        retrieval_response = requests.get(
+            RETRIEVAL_URL,
+            params={"query": request.question},
+            timeout=30
+        )
+        retrieval_response.raise_for_status()
+        retrieval_data = retrieval_response.json()
+        relevant_context = "\n\n".join(
+            item["chunk"]
+            for item in retrieval_data.get("relevant_context", [])
+        )
+        rag_used = True
+    except Exception as e:
+        retrieval_data = {"relevant_context": []}
+        relevant_context = ""
+        rag_used = False
 
     # Step 2: Send question and context to LLM
     try:
@@ -68,7 +73,7 @@ def ask(request: QuestionRequest):
     return {
         "question": request.question,
         "answer": answer,
-        "rag_used": True,
+        "rag_used": rag_used,
         "retrieved_context": retrieval_data["relevant_context"],
         "model": model,
         "llm_used": llm_used
