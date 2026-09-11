@@ -1,0 +1,10 @@
+.git
+.venv
+venv
+__pycache__
+*.zip
+evaluation
+knowledge-base
+application-service
+llm-service
+retrieval-service
