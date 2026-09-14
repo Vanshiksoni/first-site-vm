@@ -70,11 +70,11 @@ def ask(request: QuestionRequest):
     selected_model = request.model if request.model in REAL_MODEL_METRICS else "llama3.2:3b"
     model_stats = REAL_MODEL_METRICS[selected_model]
 
-    # Step 1: Retrieve relevant knowledge
+    # Step 1: Retrieve relevant knowledge (passing model for model-specific chunk match scaling)
     try:
         retrieval_response = requests.get(
             RETRIEVAL_URL,
-            params={"query": request.question},
+            params={"query": request.question, "model": selected_model},
             timeout=30
         )
         retrieval_response.raise_for_status()
@@ -131,11 +131,11 @@ def compare(request: QuestionRequest):
     selected_model = request.model if request.model in REAL_MODEL_METRICS else "llama3.2:3b"
     model_stats = REAL_MODEL_METRICS[selected_model]
 
-    # 1. Retrieval
+    # 1. Retrieval (passing model parameter for dynamic chunk alignment scoring)
     try:
         retrieval_response = requests.get(
             RETRIEVAL_URL,
-            params={"query": request.question},
+            params={"query": request.question, "model": selected_model},
             timeout=30
         )
         retrieval_response.raise_for_status()

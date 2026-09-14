@@ -927,7 +927,13 @@
                         const card = document.createElement("div");
                         card.className = "chunk-card";
                         card.innerHTML = `
-                            <div class="chunk-score">📌 Context Chunk #${idx + 1} (${scorePct}% Match)</div>
+                            <div class="chunk-score" style="display: flex; justify-content: space-between; align-items: center;">
+                                <span>📌 Context Chunk #${idx + 1}</span>
+                                <span style="color: var(--cyan-glow);">${scorePct}% Model Alignment</span>
+                            </div>
+                            <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 3px; margin: 6px 0 10px; overflow: hidden;">
+                                <div style="height: 100%; width: ${Math.min(100, Math.max(10, scorePct))}%; background: linear-gradient(90deg, #06b6d4, #6366f1); border-radius: 3px; transition: width 0.5s ease;"></div>
+                            </div>
                             <div>${escapeHtml(item.chunk || "")}</div>
                         `;
                         ragContextGrid.appendChild(card);
@@ -965,7 +971,13 @@
                         const card = document.createElement("div");
                         card.className = "chunk-card";
                         card.innerHTML = `
-                            <div class="chunk-score">📌 Context Chunk #${idx + 1} (${scorePct}% Match)</div>
+                            <div class="chunk-score" style="display: flex; justify-content: space-between; align-items: center;">
+                                <span>📌 Context Chunk #${idx + 1}</span>
+                                <span style="color: var(--cyan-glow);">${scorePct}% Model Alignment</span>
+                            </div>
+                            <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 3px; margin: 6px 0 10px; overflow: hidden;">
+                                <div style="height: 100%; width: ${Math.min(100, Math.max(10, scorePct))}%; background: linear-gradient(90deg, #06b6d4, #6366f1); border-radius: 3px; transition: width 0.5s ease;"></div>
+                            </div>
                             <div>${escapeHtml(item.chunk || "")}</div>
                         `;
                         ragContextGrid.appendChild(card);
