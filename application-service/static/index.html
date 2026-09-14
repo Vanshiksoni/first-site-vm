@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>University Helpdesk AI - RAG vs Non-RAG Comparison</title>
+    <title>University Helpdesk AI - Real RAG vs Non-RAG Evaluation</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -126,7 +126,7 @@
         /* Hero Header */
         .hero {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             position: relative;
         }
 
@@ -141,7 +141,7 @@
             color: #a5b4fc;
             font-size: 0.85rem;
             font-weight: 600;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
         .hero-badge .dot {
@@ -157,7 +157,7 @@
             font-size: 2.5rem;
             font-weight: 800;
             line-height: 1.25;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             background: linear-gradient(135deg, #ffffff 30%, #a5b4fc 70%, #c084fc 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -166,7 +166,7 @@
         .hero p {
             font-size: 1.05rem;
             color: var(--text-muted);
-            max-width: 680px;
+            max-width: 700px;
             margin: 0 auto;
             line-height: 1.6;
         }
@@ -313,18 +313,26 @@
             color: var(--text-dim);
         }
 
+        /* Controls Row */
         .action-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
-            gap: 16px;
+            gap: 14px;
+        }
+
+        .controls-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
         }
 
         .mode-toggle {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 4px;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--border-color);
             padding: 4px;
@@ -335,7 +343,7 @@
             background: transparent;
             border: none;
             color: var(--text-muted);
-            padding: 8px 16px;
+            padding: 8px 14px;
             border-radius: 10px;
             font-size: 0.85rem;
             font-weight: 600;
@@ -349,11 +357,48 @@
             box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
         }
 
+        /* Model Dropdown */
+        .model-select-wrapper {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .model-select {
+            background: rgba(18, 24, 38, 0.9);
+            color: white;
+            font-family: inherit;
+            font-size: 0.88rem;
+            font-weight: 600;
+            border: 1px solid var(--border-highlight);
+            padding: 9px 36px 9px 14px;
+            border-radius: 14px;
+            outline: none;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.15);
+            transition: all 0.2s ease;
+        }
+
+        .model-select:hover, .model-select:focus {
+            border-color: var(--primary-glow);
+            box-shadow: 0 0 16px rgba(99, 102, 241, 0.35);
+        }
+
+        .select-arrow {
+            position: absolute;
+            right: 12px;
+            pointer-events: none;
+            color: #a5b4fc;
+            font-size: 0.75rem;
+        }
+
         .btn-submit {
             background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
             color: white;
             border: none;
-            padding: 14px 28px;
+            padding: 12px 26px;
             border-radius: 14px;
             font-size: 0.95rem;
             font-weight: 600;
@@ -588,46 +633,46 @@
     <!-- Hero Title -->
     <section class="hero">
         <div class="hero-badge">
-            <span class="dot"></span> Live RAG vs Non-RAG Evaluation Mode
+            <span class="dot"></span> Empirical Model Evaluation &amp; RAG Comparison
         </div>
         <h1>Academic Policy Assistant</h1>
-        <p>Compare RAG-grounded responses against raw parametric LLM memory in real-time.</p>
+        <p>Select model &amp; compare grounded RAG answers against parametric LLM memory evaluated on 30 test cases.</p>
     </section>
 
-    <!-- Benchmark Metric Cards -->
+    <!-- Benchmark Metric Cards (Empirical Evaluation Data) -->
     <div class="metrics-banner">
         <div class="metric-card">
             <div class="metric-label">
-                <span>🎯 RAG Accuracy</span>
-                <span>✓ Verified</span>
+                <span>🎯 Empirical RAG Accuracy</span>
+                <span>✓ Measured</span>
             </div>
-            <div class="metric-value val-rag">94.2%</div>
-            <div class="metric-sub">Grounded on policy documents</div>
+            <div id="cardRagAcc" class="metric-value val-rag">46.7%</div>
+            <div id="cardRagSub" class="metric-sub">Acceptable policy precision (30 test cases)</div>
         </div>
 
         <div class="metric-card">
             <div class="metric-label">
-                <span>⚠️ Non-RAG Accuracy</span>
-                <span>⚠️ High Risk</span>
+                <span>⚠️ Non-RAG Baseline Accuracy</span>
+                <span>⚠️ Low Grounding</span>
             </div>
-            <div class="metric-value val-non-rag">41.5%</div>
-            <div class="metric-sub">58.5% Hallucination probability</div>
+            <div id="cardNonRagAcc" class="metric-value val-non-rag">16.7%</div>
+            <div id="cardRiskSub" class="metric-sub">83.3% Hallucination / refusal risk</div>
         </div>
 
         <div class="metric-card">
             <div class="metric-label">
-                <span>⚡ RAG Accuracy Boost</span>
-                <span>🚀 Delta</span>
+                <span>🚀 RAG Accuracy Boost</span>
+                <span>📈 Real Delta</span>
             </div>
-            <div class="metric-value val-boost">+52.7%</div>
-            <div class="metric-sub">Factual precision increase</div>
+            <div id="cardBoost" class="metric-value val-boost">+30.0%</div>
+            <div id="cardLatencySub" class="metric-sub">Avg Latency: 4.21s per pass</div>
         </div>
     </div>
 
     <!-- Main Query Card -->
     <main class="card">
         <div class="quick-prompts-label">
-            💡 Select a Policy Prompt to Compare
+            💡 Select a Policy Prompt to Test Model Performance
         </div>
 
         <div class="prompt-pills">
@@ -646,19 +691,36 @@
         </div>
 
         <div class="input-container">
-            <textarea id="question" placeholder="Ask any university policy question to compare RAG vs Non-RAG responses..."></textarea>
+            <textarea id="question" placeholder="Ask any university policy question to compare model responses with and without RAG..."></textarea>
         </div>
 
+        <!-- Controls Row -->
         <div class="action-row">
-            <div class="mode-toggle">
-                <button id="btnCompareMode" class="mode-btn active" onclick="setMode('compare')">
-                    ⚡ Side-by-Side Comparison
-                </button>
-                <button id="btnSingleMode" class="mode-btn" onclick="setMode('single')">
-                    🎓 RAG Only Mode
-                </button>
+            <div class="controls-group">
+
+                <!-- Mode Toggle -->
+                <div class="mode-toggle">
+                    <button id="btnCompareMode" class="mode-btn active" onclick="setMode('compare')">
+                        ⚡ Side-by-Side Comparison
+                    </button>
+                    <button id="btnSingleMode" class="mode-btn" onclick="setMode('single')">
+                        🎓 RAG Only Mode
+                    </button>
+                </div>
+
+                <!-- Model Selector Dropdown (Positioned between RAG mode & Run Comparison) -->
+                <div class="model-select-wrapper">
+                    <select id="modelSelect" class="model-select" onchange="onModelChange()">
+                        <option value="llama3.2:3b" selected>🦙 Llama 3.2 (3B)</option>
+                        <option value="mistral:7b">⚡ Mistral (7B)</option>
+                        <option value="codellama:latest">💻 Code Llama</option>
+                    </select>
+                    <span class="select-arrow">▼</span>
+                </div>
+
             </div>
 
+            <!-- Submit Button -->
             <button id="askButton" class="btn-submit" onclick="submitQuery()">
                 <span id="btnSpinner" class="spinner"></span>
                 <span id="btnText">Run Comparison</span>
@@ -675,7 +737,7 @@
     <!-- Comparison Output Section -->
     <section id="comparisonSection" class="comparison-section">
         <h2 class="section-header-title">
-            <span>📊 Response Comparison Output</span>
+            <span>📊 Live Response Comparison Output</span>
         </h2>
 
         <div class="comparison-grid">
@@ -686,11 +748,11 @@
                     <div class="col-title" style="color: #34d399;">
                         🎓 RAG Grounded Answer
                     </div>
-                    <span class="badge badge-rag">Accuracy: 94.2%</span>
+                    <span id="ragBadgeAcc" class="badge badge-rag">Real Accuracy: 46.7%</span>
                 </div>
 
                 <div id="ragMetaPill" class="stat-pill">
-                    <span>⚡ Model: Llama 3.2</span> &bull; <span id="ragTime">Latency: 0s</span>
+                    <span id="ragModelLabel">⚡ Model: Llama 3.2 (3B)</span> &bull; <span id="ragTime">Latency: 0s</span>
                 </div>
 
                 <div id="ragAnswerText" class="answer-content"></div>
@@ -709,11 +771,11 @@
                     <div class="col-title" style="color: #f87171;">
                         ⚡ Non-RAG Response
                     </div>
-                    <span class="badge badge-non-rag">Accuracy: 41.5%</span>
+                    <span id="nonRagBadgeAcc" class="badge badge-non-rag">Baseline: 16.7%</span>
                 </div>
 
                 <div id="nonRagMetaPill" class="stat-pill">
-                    <span>⚠️ Hallucination Risk: 58.5%</span> &bull; <span id="nonRagTime">Latency: 0s</span>
+                    <span id="nonRagRiskLabel">⚠️ Hallucination Risk: 83.3%</span> &bull; <span id="nonRagTime">Latency: 0s</span>
                 </div>
 
                 <div id="nonRagAnswerText" class="answer-content"></div>
@@ -727,12 +789,43 @@
     </section>
 
     <footer>
-        University Helpdesk AI &bull; RAG Benchmark &amp; Live Evaluation Architecture
+        University Helpdesk AI &bull; Real Empirical Evaluation Metrics (30 Test Cases)
     </footer>
 
 </div>
 
 <script>
+    // Real Empirical Benchmark Metrics computed from evaluation/metrics.py
+    const REAL_BENCHMARK_METRICS = {
+        "llama3.2:3b": {
+            name: "Llama 3.2 (3B)",
+            rag_accuracy: 46.7,
+            non_rag_accuracy: 16.7,
+            hallucination_risk: 83.3,
+            avg_similarity: 0.402,
+            avg_latency: 4.21,
+            delta: "+30.0%"
+        },
+        "mistral:7b": {
+            name: "Mistral (7B)",
+            rag_accuracy: 56.7,
+            non_rag_accuracy: 20.0,
+            hallucination_risk: 80.0,
+            avg_similarity: 0.431,
+            avg_latency: 8.56,
+            delta: "+36.7%"
+        },
+        "codellama:latest": {
+            name: "Code Llama",
+            rag_accuracy: 66.7,
+            non_rag_accuracy: 23.3,
+            hallucination_risk: 76.7,
+            avg_similarity: 0.499,
+            avg_latency: 7.32,
+            delta: "+43.4%"
+        }
+    };
+
     const questionInput = document.getElementById("question");
     const askButton = document.getElementById("askButton");
     const btnSpinner = document.getElementById("btnSpinner");
@@ -741,13 +834,40 @@
     const comparisonSection = document.getElementById("comparisonSection");
     const nonRagColumn = document.getElementById("nonRagColumn");
 
+    const modelSelect = document.getElementById("modelSelect");
+    const cardRagAcc = document.getElementById("cardRagAcc");
+    const cardNonRagAcc = document.getElementById("cardNonRagAcc");
+    const cardBoost = document.getElementById("cardBoost");
+    const cardLatencySub = document.getElementById("cardLatencySub");
+    const cardRiskSub = document.getElementById("cardRiskSub");
+
     const ragAnswerText = document.getElementById("ragAnswerText");
     const nonRagAnswerText = document.getElementById("nonRagAnswerText");
     const ragContextGrid = document.getElementById("ragContextGrid");
     const ragTime = document.getElementById("ragTime");
     const nonRagTime = document.getElementById("nonRagTime");
+    const ragModelLabel = document.getElementById("ragModelLabel");
+    const ragBadgeAcc = document.getElementById("ragBadgeAcc");
+    const nonRagBadgeAcc = document.getElementById("nonRagBadgeAcc");
+    const nonRagRiskLabel = document.getElementById("nonRagRiskLabel");
 
     let currentMode = "compare";
+
+    function onModelChange() {
+        const selected = modelSelect.value;
+        const stats = REAL_BENCHMARK_METRICS[selected] || REAL_BENCHMARK_METRICS["llama3.2:3b"];
+
+        cardRagAcc.textContent = stats.rag_accuracy + "%";
+        cardNonRagAcc.textContent = stats.non_rag_accuracy + "%";
+        cardBoost.textContent = stats.delta;
+        cardLatencySub.textContent = `Avg Latency: ${stats.avg_latency}s (Similarity: ${stats.avg_similarity})`;
+        cardRiskSub.textContent = `${stats.hallucination_risk}% Hallucination / refusal risk`;
+
+        ragBadgeAcc.textContent = `Real Accuracy: ${stats.rag_accuracy}%`;
+        nonRagBadgeAcc.textContent = `Baseline: ${stats.non_rag_accuracy}%`;
+        nonRagRiskLabel.textContent = `⚠️ Hallucination Risk: ${stats.hallucination_risk}%`;
+        ragModelLabel.textContent = `⚡ Model: ${stats.name}`;
+    }
 
     function setMode(mode) {
         currentMode = mode;
@@ -763,6 +883,7 @@
 
     async function submitQuery() {
         const question = questionInput.value.trim();
+        const selectedModel = modelSelect.value;
 
         if (!question) {
             showStatus("Please enter a question before submitting.", "warning");
@@ -772,7 +893,7 @@
         askButton.disabled = true;
         btnSpinner.style.display = "inline-block";
         btnText.textContent = "Processing...";
-        showStatus("Running dual inference pass (RAG vs Non-RAG)...", "info");
+        showStatus(`Running dual inference using ${REAL_BENCHMARK_METRICS[selectedModel].name}...`, "info");
         comparisonSection.style.display = "none";
 
         try {
@@ -780,7 +901,7 @@
                 const res = await fetch("/compare", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ question: question })
+                    body: JSON.stringify({ question: question, model: selectedModel })
                 });
 
                 const data = await res.json();
@@ -788,6 +909,12 @@
 
                 hideStatus();
                 nonRagColumn.style.display = "flex";
+
+                // Update cards with model metrics
+                const stats = data.metrics_summary.real_metrics || REAL_BENCHMARK_METRICS[selectedModel];
+                ragBadgeAcc.textContent = `Real Accuracy: ${stats.rag_accuracy}%`;
+                nonRagBadgeAcc.textContent = `Baseline: ${stats.non_rag_accuracy}%`;
+                ragModelLabel.textContent = `⚡ Model: ${data.metrics_summary.model || stats.name}`;
 
                 // Populate RAG
                 ragAnswerText.innerHTML = formatText(data.rag.answer);
@@ -818,7 +945,7 @@
                 const res = await fetch("/ask", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ question: question })
+                    body: JSON.stringify({ question: question, model: selectedModel })
                 });
 
                 const data = await res.json();
@@ -829,6 +956,7 @@
 
                 ragAnswerText.innerHTML = formatText(data.answer);
                 ragTime.textContent = `Model: ${data.model}`;
+                ragModelLabel.textContent = `⚡ Model: ${data.model}`;
 
                 ragContextGrid.innerHTML = "";
                 if (data.retrieved_context && data.retrieved_context.length > 0) {
@@ -878,6 +1006,9 @@
         escaped = escaped.replace(/`([^`]+)`/g, '<code>$1</code>');
         return escaped;
     }
+
+    // Initialize metrics on page load
+    onModelChange();
 </script>
 
 </body>

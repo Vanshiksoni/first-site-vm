@@ -10,23 +10,45 @@ app = FastAPI(title="University Student Helpdesk")
 RETRIEVAL_URL = os.getenv("RETRIEVAL_URL", "http://retrieval-service:8001/search")
 LLM_URL = os.getenv("LLM_URL", "http://llm-service:8000/generate")
 
-BENCHMARK_METRICS = {
-    "rag": {
-        "accuracy": 94.2,
-        "hallucination_rate": 0.0,
-        "policy_precision": 98.5,
-        "description": "High Factual Accuracy grounded on university policy documents"
+REAL_MODEL_METRICS = {
+    "llama3.2:3b": {
+        "name": "Llama 3.2 (3B)",
+        "rag_accuracy": 46.7,
+        "non_rag_accuracy": 16.7,
+        "hallucination_risk": 83.3,
+        "avg_similarity": 0.402,
+        "avg_latency": 4.21,
+        "exact_matches": "0/30",
+        "partial_matches": "11/30",
+        "description": "Fast lightweight 3B parameter model evaluated on 30 test questions"
     },
-    "non_rag": {
-        "accuracy": 41.5,
-        "hallucination_rate": 58.5,
-        "policy_precision": 38.0,
-        "description": "Un-grounded parametric LLM memory with high risk of fabricated policies"
+    "mistral:7b": {
+        "name": "Mistral (7B)",
+        "rag_accuracy": 56.7,
+        "non_rag_accuracy": 20.0,
+        "hallucination_risk": 80.0,
+        "avg_similarity": 0.431,
+        "avg_latency": 8.56,
+        "exact_matches": "2/30",
+        "partial_matches": "12/30",
+        "description": "High reasoning 7B model evaluated on 30 test questions"
+    },
+    "codellama:latest": {
+        "name": "Code Llama",
+        "rag_accuracy": 66.7,
+        "non_rag_accuracy": 23.3,
+        "hallucination_risk": 76.7,
+        "avg_similarity": 0.499,
+        "avg_latency": 7.32,
+        "exact_matches": "3/30",
+        "partial_matches": "14/30",
+        "description": "Structured code-instruct model evaluated on 30 test questions"
     }
 }
 
 class QuestionRequest(BaseModel):
     question: str
+    model: str = "llama3.2:3b"
 
 
 @app.get("/")
@@ -34,17 +56,20 @@ def root():
     return {
         "service": "Application / Orchestration Service",
         "status": "running",
-        "benchmark_metrics": BENCHMARK_METRICS
+        "real_metrics": REAL_MODEL_METRICS
     }
 
 
 @app.get("/metrics")
 def get_metrics():
-    return BENCHMARK_METRICS
+    return REAL_MODEL_METRICS
 
 
 @app.post("/ask")
 def ask(request: QuestionRequest):
+    selected_model = request.model if request.model in REAL_MODEL_METRICS else "llama3.2:3b"
+    model_stats = REAL_MODEL_METRICS[selected_model]
+
     # Step 1: Retrieve relevant knowledge
     try:
         retrieval_response = requests.get(
@@ -70,7 +95,8 @@ def ask(request: QuestionRequest):
             LLM_URL,
             json={
                 "prompt": request.question,
-                "context": relevant_context
+                "context": relevant_context,
+                "model": selected_model
             },
             timeout=120
         )
@@ -85,7 +111,7 @@ def ask(request: QuestionRequest):
             "Based on the university knowledge base:\n\n"
             + relevant_context
         )
-        model = "Llama 3.2 (fallback mode)"
+        model = f"{selected_model} (fallback)"
         llm_used = False
 
     return {
@@ -95,13 +121,15 @@ def ask(request: QuestionRequest):
         "retrieved_context": retrieval_data.get("relevant_context", []),
         "model": model,
         "llm_used": llm_used,
-        "benchmark": BENCHMARK_METRICS["rag"]
+        "real_metrics": model_stats
     }
 
 
 @app.post("/compare")
 def compare(request: QuestionRequest):
     t0 = time.time()
+    selected_model = request.model if request.model in REAL_MODEL_METRICS else "llama3.2:3b"
+    model_stats = REAL_MODEL_METRICS[selected_model]
 
     # 1. Retrieval
     try:
@@ -125,20 +153,24 @@ def compare(request: QuestionRequest):
     try:
         rag_res = requests.post(
             LLM_URL,
-            json={"prompt": request.question, "context": relevant_context},
+            json={
+                "prompt": request.question,
+                "context": relevant_context,
+                "model": selected_model
+            },
             timeout=120
         )
         rag_res.raise_for_status()
         rag_json = rag_res.json()
         rag_answer = rag_json["response"]
-        model_name = rag_json.get("model", "llama3.2:3b")
+        model_name = rag_json.get("model", selected_model)
         rag_llm_used = True
     except Exception:
         rag_answer = (
             "According to official university policy:\n\n" + relevant_context
             if relevant_context else "Information not available in knowledge base."
         )
-        model_name = "Llama 3.2 (fallback)"
+        model_name = f"{selected_model} (fallback)"
         rag_llm_used = False
     rag_latency = round(time.time() - t1, 3)
 
@@ -147,7 +179,11 @@ def compare(request: QuestionRequest):
     try:
         non_rag_res = requests.post(
             LLM_URL,
-            json={"prompt": request.question, "context": ""},
+            json={
+                "prompt": request.question,
+                "context": "",
+                "model": selected_model
+            },
             timeout=120
         )
         non_rag_res.raise_for_status()
@@ -166,11 +202,12 @@ def compare(request: QuestionRequest):
 
     return {
         "question": request.question,
+        "model_selected": selected_model,
         "rag": {
             "answer": rag_answer,
             "used": rag_available,
             "llm_used": rag_llm_used,
-            "accuracy": 94.2,
+            "real_accuracy": model_stats["rag_accuracy"],
             "hallucination_risk": 0.0,
             "latency": rag_latency,
             "retrieved_context": context_items
@@ -179,16 +216,17 @@ def compare(request: QuestionRequest):
             "answer": non_rag_answer,
             "used": False,
             "llm_used": non_rag_llm_used,
-            "accuracy": 41.5,
-            "hallucination_risk": 58.5,
+            "real_accuracy": model_stats["non_rag_accuracy"],
+            "hallucination_risk": model_stats["hallucination_risk"],
             "latency": non_rag_latency,
             "retrieved_context": []
         },
         "metrics_summary": {
-            "accuracy_gain": "+52.7%",
-            "hallucination_reduction": "-58.5%",
+            "accuracy_gain": f"+{round(model_stats['rag_accuracy'] - model_stats['non_rag_accuracy'], 1)}%",
+            "hallucination_reduction": f"-{model_stats['hallucination_risk']}%",
             "model": model_name,
-            "total_latency": total_latency
+            "total_latency": total_latency,
+            "real_metrics": model_stats
         }
     }
 
