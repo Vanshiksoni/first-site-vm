@@ -4,7 +4,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 import requests
 
-app = FastAPI(title="Week 3 LLM Service")
+app = FastAPI(title="Week 4 Guardrails-Enabled LLM Service")
 
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://host.docker.internal:11434/api/generate")
 MODEL = os.getenv("MODEL", "llama3.2:3b")

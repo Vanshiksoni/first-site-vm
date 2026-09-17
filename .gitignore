@@ -20,5 +20,9 @@ __pycache__/
 .vscode/
 .idea/
 
-# Evaluation generated results
+# Evaluation generated results and pdf reports
 evaluation/results/
+*.pdf
+evaluation/pdf_reports/
+pdf_reports/
+pdf_reports.zip
