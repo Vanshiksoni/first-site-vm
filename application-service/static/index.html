@@ -740,6 +740,9 @@
             <span>📊 Live Response Comparison Output</span>
         </h2>
 
+        <!-- Live Guardrail Status Banner -->
+        <div id="guardrailBanner" style="display:none; margin-bottom: 20px; padding: 14px 18px; border-radius: 16px; border: 1px solid var(--border-highlight); font-size: 0.9rem;"></div>
+
         <div class="comparison-grid">
 
             <!-- RAG Column -->
@@ -916,6 +919,9 @@
                 nonRagBadgeAcc.textContent = `Baseline: ${stats.non_rag_accuracy}%`;
                 ragModelLabel.textContent = `⚡ Model: ${data.metrics_summary.model || stats.name}`;
 
+                // Update Guardrail Status Banner
+                updateGuardrailBanner(data);
+
                 // Populate RAG
                 ragAnswerText.innerHTML = formatText(data.rag.answer);
                 ragTime.textContent = `Latency: ${data.rag.latency}s`;
@@ -960,6 +966,9 @@
                 hideStatus();
                 nonRagColumn.style.display = "none";
 
+                // Update Guardrail Status Banner
+                updateGuardrailBanner(data);
+
                 ragAnswerText.innerHTML = formatText(data.answer);
                 ragTime.textContent = `Model: ${data.model}`;
                 ragModelLabel.textContent = `⚡ Model: ${data.model}`;
@@ -996,6 +1005,38 @@
             btnSpinner.style.display = "none";
             btnText.textContent = currentMode === "compare" ? "Run Comparison" : "Ask Helpdesk";
         }
+    }
+
+    function updateGuardrailBanner(data) {
+        const banner = document.getElementById("guardrailBanner");
+        if (!banner) return;
+
+        const inputG = data.input_guardrails || (data.guardrails && data.guardrails.input_guardrails) || {};
+        const outputG = (data.rag && data.rag.output_guardrails) || (data.guardrails && data.guardrails.output_guardrails) || {};
+
+        let bannerHtml = "";
+
+        if (inputG.injection_blocked || (data.guardrails_status === "BLOCKED_BY_INPUT_GUARDRAIL")) {
+            bannerHtml = `<div style="color: #f87171; font-weight: 700;">🛑 Prompt Injection Attack Neutralized by Input Guardrail</div><div style="font-size: 0.85rem; color: #cbd5e1; margin-top: 4px;">Adversarial system override attempt detected. The query was blocked before sending to LLM.</div>`;
+            banner.style.borderColor = "rgba(239, 68, 68, 0.5)";
+            banner.style.background = "rgba(239, 68, 68, 0.12)";
+        } else if (inputG.pii_masked) {
+            const types = (inputG.pii_types || []).join(", ");
+            bannerHtml = `<div style="color: #34d399; font-weight: 700;">🔒 PII Privacy Guardrail Active — Sensitive Fields Redacted (${types})</div><div style="font-size: 0.85rem; color: #cbd5e1; margin-top: 4px;"><b>Sanitized Prompt sent to LLM:</b> <code style="color:#a5b4fc;">${escapeHtml(data.sanitized_question || inputG.sanitized_prompt || '')}</code></div>`;
+            banner.style.borderColor = "rgba(16, 185, 129, 0.5)";
+            banner.style.background = "rgba(16, 185, 129, 0.12)";
+        } else if (outputG.is_safe_refusal || (data.rag && !data.rag.used)) {
+            bannerHtml = `<div style="color: #fbbf24; font-weight: 700;">🛡️ Output Guardrail Active — KB Safe Refusal Enforced</div><div style="font-size: 0.85rem; color: #cbd5e1; margin-top: 4px;">Question asks about an unsupported policy not present in university documents. Guardrail prevented AI hallucination.</div>`;
+            banner.style.borderColor = "rgba(245, 158, 11, 0.5)";
+            banner.style.background = "rgba(245, 158, 11, 0.12)";
+        } else {
+            bannerHtml = `<div style="color: #34d399; font-weight: 600;">🛡️ Week 4 Guardrails Passed — Input Clean &amp; Response Grounded in KB</div>`;
+            banner.style.borderColor = "rgba(99, 102, 241, 0.3)";
+            banner.style.background = "rgba(99, 102, 241, 0.08)";
+        }
+
+        banner.innerHTML = bannerHtml;
+        banner.style.display = "block";
     }
 
     function showStatus(msg, type) {

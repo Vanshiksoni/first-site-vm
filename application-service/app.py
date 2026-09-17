@@ -74,12 +74,6 @@ SAFE_REFUSAL_PHRASES = [
 
 
 def evaluate_input_guardrails(prompt: str) -> dict:
-    """
-    Evaluates input prompt against Week 4 Input Guardrails:
-    1. Prompt Injection Attack Defense
-    2. Length & Sanitization Limits
-    3. PII Masking & Detection
-    """
     flags = []
     sanitized_prompt = prompt
     prompt_lower = prompt.lower()
@@ -95,7 +89,7 @@ def evaluate_input_guardrails(prompt: str) -> dict:
         flags.append("EXCESSIVE_LENGTH")
         sanitized_prompt = prompt[:2000]
 
-    # 3. PII Detection & Sanitization
+    # 3. PII Detection & Redaction
     pii_found = []
     for pii_type, pattern in PII_PATTERNS.items():
         if re.search(pattern, sanitized_prompt):
@@ -110,6 +104,7 @@ def evaluate_input_guardrails(prompt: str) -> dict:
     return {
         "passed": passed,
         "flags": flags,
+        "raw_prompt": prompt,
         "sanitized_prompt": sanitized_prompt,
         "injection_blocked": "PROMPT_INJECTION_ATTEMPT" in flags,
         "pii_masked": len(pii_found) > 0,
@@ -118,19 +113,12 @@ def evaluate_input_guardrails(prompt: str) -> dict:
 
 
 def evaluate_output_guardrails(answer: str, context: str) -> dict:
-    """
-    Evaluates LLM response against Week 4 Output Guardrails:
-    1. Grounding Adherence & Safe Refusal
-    2. Hallucination Risk Detection
-    """
     flags = []
     answer_lower = answer.lower()
 
-    # Grounding & Refusal check
     has_context = bool(context and context.strip())
     is_safe_refusal = any(phrase in answer_lower for phrase in SAFE_REFUSAL_PHRASES)
 
-    # Hallucination Check: If no context, response should refuse, not fabricate specific percentages or durations
     hallucination_detected = False
     if not has_context and not is_safe_refusal:
         if re.search(r"\b\d+(\.\d+)?\s*%", answer_lower) or re.search(r"\b\d+\s*(days?|weeks?|months?|hours?)\b", answer_lower):
@@ -138,13 +126,21 @@ def evaluate_output_guardrails(answer: str, context: str) -> dict:
             flags.append("UNGROUNDED_NUMERICAL_HALLUCINATION")
 
     grounded = has_context or is_safe_refusal
+    final_answer = answer
+
+    # If context is empty and answer was not a safe refusal, enforce clean safe refusal guardrail
+    if not has_context and not is_safe_refusal:
+        final_answer = "The information is not available in the university knowledge base."
+        is_safe_refusal = True
+        grounded = True
 
     return {
         "passed": grounded and not hallucination_detected,
         "grounded": grounded,
         "is_safe_refusal": is_safe_refusal,
         "hallucination_detected": hallucination_detected,
-        "flags": flags
+        "flags": flags,
+        "final_answer": final_answer
     }
 
 
@@ -197,6 +193,7 @@ def ask(request: QuestionRequest):
     if not input_g["passed"]:
         return {
             "question": request.question,
+            "sanitized_question": input_g["sanitized_prompt"],
             "answer": "⚠️ Security Guardrail Notice: Your query was blocked because it triggered prompt injection defense rules.",
             "rag_used": False,
             "retrieved_context": [],
@@ -225,7 +222,7 @@ def ask(request: QuestionRequest):
             item["chunk"]
             for item in retrieval_data.get("relevant_context", [])
         )
-        rag_used = True
+        rag_used = bool(relevant_context)
     except Exception:
         retrieval_data = {"relevant_context": []}
         relevant_context = ""
@@ -250,18 +247,20 @@ def ask(request: QuestionRequest):
         llm_used = True
     except Exception:
         answer = (
-            "Based on the university knowledge base:\n\n"
-            + relevant_context if relevant_context else "Information is not available in the university knowledge base."
+            "Based on the university knowledge base:\n\n" + relevant_context
+            if relevant_context else "The information is not available in the university knowledge base."
         )
         model = f"{selected_model} (fallback)"
         llm_used = False
 
     # Step 3: Output Guardrails Check
     output_g = evaluate_output_guardrails(answer, relevant_context)
+    final_answer = output_g["final_answer"]
 
     return {
         "question": request.question,
-        "answer": answer,
+        "sanitized_question": clean_question,
+        "answer": final_answer,
         "rag_used": rag_used,
         "retrieved_context": retrieval_data.get("relevant_context", []),
         "model": model,
@@ -287,6 +286,7 @@ def compare(request: QuestionRequest):
         blocked_resp = "⚠️ Security Guardrail Notice: Query blocked due to prompt injection pattern."
         return {
             "question": request.question,
+            "sanitized_question": input_g["sanitized_prompt"],
             "model_selected": selected_model,
             "guardrails_status": "BLOCKED_BY_INPUT_GUARDRAIL",
             "input_guardrails": input_g,
@@ -297,7 +297,8 @@ def compare(request: QuestionRequest):
                 "real_accuracy": 0.0,
                 "hallucination_risk": 0.0,
                 "latency": 0.001,
-                "retrieved_context": []
+                "retrieved_context": [],
+                "output_guardrails": {"passed": True, "grounded": True, "is_safe_refusal": True, "hallucination_detected": False, "flags": []}
             },
             "non_rag": {
                 "answer": blocked_resp,
@@ -306,7 +307,8 @@ def compare(request: QuestionRequest):
                 "real_accuracy": 0.0,
                 "hallucination_risk": 0.0,
                 "latency": 0.001,
-                "retrieved_context": []
+                "retrieved_context": [],
+                "output_guardrails": {"passed": True, "grounded": True, "is_safe_refusal": True, "hallucination_detected": False, "flags": []}
             },
             "metrics_summary": {
                 "accuracy_gain": "0.0%",
@@ -330,7 +332,7 @@ def compare(request: QuestionRequest):
         retrieval_data = retrieval_response.json()
         context_items = retrieval_data.get("relevant_context", [])
         relevant_context = "\n\n".join(item["chunk"] for item in context_items)
-        rag_available = True
+        rag_available = bool(relevant_context)
     except Exception:
         context_items = []
         relevant_context = ""
@@ -356,7 +358,7 @@ def compare(request: QuestionRequest):
     except Exception:
         rag_answer = (
             "According to official university policy:\n\n" + relevant_context
-            if relevant_context else "Information is not available in the university knowledge base."
+            if relevant_context else "The information is not available in the university knowledge base."
         )
         model_name = f"{selected_model} (fallback)"
         rag_llm_used = False
@@ -394,11 +396,12 @@ def compare(request: QuestionRequest):
 
     return {
         "question": request.question,
+        "sanitized_question": clean_question,
         "model_selected": selected_model,
         "guardrails_status": "ACTIVE",
         "input_guardrails": input_g,
         "rag": {
-            "answer": rag_answer,
+            "answer": rag_out_g["final_answer"],
             "used": rag_available,
             "llm_used": rag_llm_used,
             "real_accuracy": model_stats["rag_accuracy"],
@@ -408,7 +411,7 @@ def compare(request: QuestionRequest):
             "output_guardrails": rag_out_g
         },
         "non_rag": {
-            "answer": non_rag_answer,
+            "answer": non_rag_out_g["final_answer"],
             "used": False,
             "llm_used": non_rag_llm_used,
             "real_accuracy": model_stats["non_rag_accuracy"],
